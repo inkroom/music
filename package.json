@@ -1,0 +1,23 @@
+{
+  "name": "music",
+  "version": "1.0.0",
+  "description": "跨平台，多来源音乐播放器",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/inkroom/music.git"
+  },
+  "keywords": [
+    "music",
+    "electron"
+  ],
+  "author": "inkbox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inkroom/music/issues"
+  },
+  "homepage": "https://github.com/inkroom/music#readme"
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>墨盒音乐</title>
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+</head>
+
+<body>
+
+    <div class="head" id="player">
+        <div class="img">
+            <img src="cover.png" :src="music.cover" alt="封面图片">
+        </div>
+        <div>
+            <div class="title" v-text="music.title">歌曲名称</div>
+            <div class="control">
+                <ul>
+                    <li>
+                        <i class="fa " @click="toogle" :class="  playing ? 'fa-pause':'fa-play' "></i>
+                    </li><li>
+                        <i class="fa fa-forward"></i>
+                    </li><li>
+                        <i class="fa fa-random"></i>
+                    </li><li>
+                        <i class="fa fa-volume-up"></i>
+                    </li><li>
+                        <i class="fa fa-list"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="time">
+                <i class="fa fa-search"></i>
+                <span><span  style="color:red">{{music.now}}</span>/<span >{{music.total}}</span></span>
+            </div>
+            <div class="bar">
+                <div class="bar-bottom" >
+                    <div class="alpha" :style="{ left:music.rate+'%' }">
+                        <div class="alpha-bottom"></div>
+                    </div>
+                    <div class="bar-top" :style="{ width:music.rate+'%' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content"></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/player.js"></script>
+    <script>
+        window.player.music = {
+            url: 'http://fs.w.kugou.com/201901112340/00066c2c3796aba17dafb3ffb47063ca/G055/M02/1D/07/14YBAFbhKNaATZLSAEokW28ke_4306.mp3',
+            title: '假如爱情有真意',
+        }
+    </script>
+</body>
+
+</html>

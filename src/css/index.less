@@ -1,0 +1,129 @@
+
+@head-height:100px;
+
+
+@bar-heigth:12px;
+@bar-width:100%;
+@bar-radis:8px;
+@bar-bottom-bg:rgb(83, 97, 22);
+@bar-top-bg:red;
+
+@bar-alpha-bottom:rgb(151, 58, 58);
+@bar-alpha-top:rgb(125, 161, 197);
+
+
+@right-margin:15px;
+
+* {
+    padding: 0;
+    margin: 0;
+}
+head,body{
+    height: 100%;
+    width: 100%;
+}
+
+i{
+    cursor: pointer;
+}
+
+.head {
+    min-height: @head-height;
+    >div{
+        // display: inline-block;
+        // padding-bottom: 2000px;
+        // margin-bottom: -2000px;
+        margin-left: @head-height;
+        // padding-right: 15px;
+        box-sizing: border-box;
+    }
+  
+    .img{
+          // 左侧
+        float: left;
+        margin-left: 0px;
+        min-height: @head-height;
+        min-width: @head-height;
+
+        img{
+            min-height: @head-height;
+            min-width: @head-height;
+        }
+    }
+    .control{
+        // margin-right: -5px;
+        // text-align: center;
+        ul li{
+            text-align: center;
+            vertical-align: top;
+            display: inline-block;
+            // margin:5px;
+            width: 20%;
+            margin: 0;
+            // padding-right: 5px;
+        }
+    }
+    .time{
+        padding-right: @right-margin;
+        >i{
+            display: inline-block;
+            margin-left: 15px;
+        }
+        >span{
+            float: right;
+        }
+    }
+
+    .bar{
+        padding-right: @right-margin;
+        .bar-bottom{
+            position: relative;
+            margin: 5px;
+            height: @bar-heigth;
+            width: @bar-width;
+            background-color: @bar-bottom-bg;
+           
+            border-radius: @bar-radis;
+
+        }
+        .bar-top{
+            height: @bar-heigth;
+            // width: @bar-width;
+            background-color: @bar-top-bg;
+            border-top-left-radius: @bar-radis;
+            border-bottom-left-radius: @bar-radis;
+            margin-right:-5px;
+        }
+        .alpha{
+            float: left;
+            position: absolute;
+            top :-1.5px;
+// 避免底层颜色和移动图标之间出现间距
+            margin-left:-5px;
+
+            height: @bar-heigth + 3px;
+            width: @bar-heigth + 3px;
+
+            background: @bar-alpha-top;
+
+            border-radius: 50%;
+
+            .alpha-bottom{
+
+                position: absolute;
+                // 一共四份，占中间两份
+                top: @bar-heigth / 6;
+                left: @bar-heigth / 6;
+                height: @bar-heigth / 2;
+                width: @bar-heigth / 2;
+                background-color: @bar-alpha-top;
+                border-radius: 50%;
+            }
+        }
+
+        
+
+    }
+   
+}
+

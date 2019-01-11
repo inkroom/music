@@ -1,0 +1,83 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+head,
+body {
+  height: 100%;
+  width: 100%;
+}
+i {
+  cursor: pointer;
+}
+.head {
+  min-height: 100px;
+}
+.head > div {
+  margin-left: 100px;
+  box-sizing: border-box;
+}
+.head .img {
+  float: left;
+  margin-left: 0px;
+  min-height: 100px;
+  min-width: 100px;
+}
+.head .img img {
+  min-height: 100px;
+  min-width: 100px;
+}
+.head .control ul li {
+  text-align: center;
+  vertical-align: top;
+  display: inline-block;
+  width: 20%;
+  margin: 0;
+}
+.head .time {
+  padding-right: 15px;
+}
+.head .time > i {
+  display: inline-block;
+  margin-left: 15px;
+}
+.head .time > span {
+  float: right;
+}
+.head .bar {
+  padding-right: 15px;
+}
+.head .bar .bar-bottom {
+  position: relative;
+  margin: 5px;
+  height: 12px;
+  width: 100%;
+  background-color: #536116;
+  border-radius: 8px;
+}
+.head .bar .bar-top {
+  height: 12px;
+  background-color: red;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  margin-right: -5px;
+}
+.head .bar .alpha {
+  float: left;
+  position: absolute;
+  top: -1.5px;
+  margin-left: -5px;
+  height: 15px;
+  width: 15px;
+  background: #7da1c5;
+  border-radius: 50%;
+}
+.head .bar .alpha .alpha-bottom {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 6px;
+  width: 6px;
+  background-color: #7da1c5;
+  border-radius: 50%;
+}
