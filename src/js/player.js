@@ -3,45 +3,66 @@
  */
 (function () {
 
+
+    HTMLAudioElement.prototype._play = HTMLAudioElement.prototype.play;
+    HTMLAudioElement.prototype._load = HTMLAudioElement.prototype.load;
+    HTMLAudioElement.prototype.play = function () {
+        // 禁止load操作
+        this._lockLoad = true;
+        this._play();
+    }
+    HTMLAudioElement.prototype.load = function () {
+        this._lockLoad || this._load();
+    }
+
     //创建audio控制音乐播放
     var audio = document.createElement('audio');
-
+    // audio.muted = "muted";
     audio.style.display = "none";
 
-    audio.autoplay = false;
-    audio.loog = false;
+    audio.autoplay = true;
+    audio.loop = false;
+
+    audio.ontimeupdate = function () {
+        listener_rate();
+    }
+
+    audio.onprogress = function () {//缓冲
+        // player.playing = false;
+
+    }
 
     document.body.appendChild(audio);
 
-    var interval_index = -1;
 
-    function transTime(duration) {//将秒数转出成00:00格式
 
-        var min = parseInt(duration / 60);
-        if (min < 10) {
-            min = '0' + min;
-        }
-        var sec = parseInt(duration % 60);
-        if (sec < 10) {
-            sec = '0' + sec;
-        }
-        return min + ":" + sec;
-    }
     //轮询监听播放进度
     function listener_rate() {
+        if (player.draging) {//正在拖拽
+            return;
+        }
         var currentTime = audio.currentTime;
         var duration = audio.duration;
 
-
+        if (currentTime == duration) {
+            player.playing = false;
+            return;
+        }
         player.music.now = transTime(currentTime);
         player.music.total = transTime(duration);
         player.music.rate = (currentTime / duration) * 100;
+    }
 
-        // player.$set(player.music, 'now', transTime(currentTime))
-        // player.$set(player.music, 'total', transTime(duration))
-        // player.$set(player.music, 'rate', currentTime / duration)
-
-        console.log(player.music.now)
+    function clearDrag() {//清除拖拽
+        if (audio.duration >= 0) {
+            player.draging = false;
+            player.draging = null;
+            player.seek(player.music.rate);
+            document.onmousemove = function () { }
+        }
+    }
+    document.onmouseup = function () {
+        clearDrag();
     }
 
     window.player = new Vue({
@@ -56,6 +77,7 @@
                 rate: '0',//进度比例
             },//当前播放的music
             vol: {},//音量
+            random: true,
         },
         mounted() {
             var _this = this;
@@ -66,6 +88,7 @@
                 this.$set(this.music, 'rate', 0)
                 //解析音频
                 audio.src = nv.url;
+                // audio.load();
                 _this.play();
             })
         },
@@ -82,16 +105,25 @@
                 //     this.$set(this.music, 'rate', 0)
                 // }
 
-                clearInterval(interval_index);
+                // clearInterval(interval_index);
                 //开始播放
-                audio.play();
+                if (audio.duration > 0){
+                    if (audio.paused) {
+                        audio.play();
+                        // audio.load();
+                    }
+
                 this.playing = true;
-                interval_index = setInterval(listener_rate, 1000);
+                // interval_index = setInterval(listener_rate, 1000);
+                }
+                    
             },
             pause() {
-                audio.pause();
-                this.playing = false;
-                clearInterval(interval_index);
+                if(audio.duration>0){
+                    audio.pause();
+                    this.playing = false;
+                }
+               
             },
             toogle() {
                 if (this.playing) {
@@ -99,6 +131,42 @@
                 } else {
                     this.play();
                 }
+            },
+            next() {
+                let next = control.next(random);
+                if (next) {
+                    this.music = next;
+                }
+            },
+            search() {
+                control.showSearch();
+            },
+            seek(rate) {//
+                if (!rate) {//没有值
+
+                } else {
+                    audio.currentTime = (audio.duration * rate / 100);
+                    audio.play();
+                }
+
+            },
+            down(event) {
+                if (audio.duration >= 0) {//保证有音乐才拖拽
+                    this.draging = true;
+                    this.mx = event.pageX;
+                    this.sx = event.target.offsetLeft;
+                    let _this = this;
+                    document.onmousemove = function (event) {
+                        if (event.pageX > _this.$refs['bar'].offsetLeft && event.pageX < _this.$refs['bar'].offsetLeft + _this.$refs['bar'].offsetWidth) {
+                            console.log('event.pageX=' + event.pageX);
+                            console.log('_this.mx=' + _this.mx);
+                            console.log('_this.sx=' + _this.sx);
+                            _this.music.rate = ((event.pageX - _this.mx + _this.sx) / _this.$refs['bar'].offsetWidth) * 100;
+                        }
+                    }
+                }
+
+
             }
         }
     })

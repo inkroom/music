@@ -8,6 +8,8 @@
     <title>墨盒音乐</title>
     <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/content.css" />
+    <link rel="stylesheet" href="../css/search.css" />
 </head>
 
 <body>
@@ -21,9 +23,9 @@
             <div class="control">
                 <ul>
                     <li>
-                        <i class="fa " @click="toogle" :class="  playing ? 'fa-pause':'fa-play' "></i>
+                        <i class="fa " @click="toogle" :class="playing ? 'fa-pause':'fa-play' "></i>
                     </li><li>
-                        <i class="fa fa-forward"></i>
+                        <i class="fa fa-forward" @click="next"></i>
                     </li><li>
                         <i class="fa fa-random"></i>
                     </li><li>
@@ -34,12 +36,12 @@
                 </ul>
             </div>
             <div class="time">
-                <i class="fa fa-search"></i>
-                <span><span  style="color:red">{{music.now}}</span>/<span >{{music.total}}</span></span>
+                <i class="fa fa-search" @click="search"></i>
+                <span><span style="color:red" v-text="music.now"></span>&nbsp;/&nbsp;<span v-text="music.total"></span></span>
             </div>
-            <div class="bar">
-                <div class="bar-bottom" >
-                    <div class="alpha" :style="{ left:music.rate+'%' }">
+            <div class="bar" ref="bar" ondrop="drop">
+                <div class="bar-bottom">
+                    <div class="alpha" :style="{ left:music.rate+'%' }" @mousedown="down">
                         <div class="alpha-bottom"></div>
                     </div>
                     <div class="bar-top" :style="{ width:music.rate+'%' }"></div>
@@ -47,14 +49,87 @@
             </div>
         </div>
     </div>
-    <div class="content"></div>
+    <div class="content" id="list">
+        <ul>
+            <li v-for="item in musics">
+                <span class="title"><a :href="item.url" v-text="item.title"></a></span>
+                <span class="time" v-text="item.time"></span>
+                <span class="origin" v-text="item.origin"></span>
+            </li>
+        </ul>
+    </div>
+    <div id="search" :style="{ display:show ? 'block':'none' }">
+        <div >
+            <i class="fa fa-window-close" @click="show = false"></i>
+            <div class="form">
+                <input type="text" v-model="title" placeholder="歌曲名称" @keyup.enter="search" >
+                <select v-model="origin" @change="search">
+                    <option :value="item.key" v-for="item in origins" v-text="item.value" ></option>
+                </select>
+            </div>
+            <div class="result">
+                <ul>
+                    <li v-for="(item ,index) in result">
+                        <span class="title" v-text="item.title">歌曲名称</span>
+                        <span class="right">
+                            <span class="time" v-text="item.time"></span>
+                            <i class="fa fa-play" @click="play(index)"></i>
+                            <i class="fa fa-plus" @click="add(index)"></i>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="../js/common.js"></script>
     <script src="../js/player.js"></script>
+    <script src="../js/list.js"></script>
+    <script src="../js/search.js"></script>
     <script>
-        window.player.music = {
-            url: 'http://fs.w.kugou.com/201901112340/00066c2c3796aba17dafb3ffb47063ca/G055/M02/1D/07/14YBAFbhKNaATZLSAEokW28ke_4306.mp3',
-            title: '假如爱情有真意',
-        }
+        window.control = {
+            next(random) {
+                return list.next(random);
+            },
+            showSearch() {
+                search.show = true;
+            },
+            play(music) {
+                player.music = music;
+            },
+            add(music) {
+                list.add(music);
+            }
+        };
+        control.showSearch();
+
+        search.result.push({title:'恋爱循环',time:'02:42',origin:'酷狗'})
+        // control.add({title:'恋爱循环',time:'02:42',origin:'酷狗'})
+
+        // let fs = require('fs');
+
+        // let path = require('path');
+
+        // fs.readdir(path.join(__dirname, '../plugins'), function (err, dirs) {
+        //     if (err) throw err;
+        //     console.log(dirs);
+        //     dirs.forEach(function (dir) {
+        //         var script = document.createElement("script");
+        //         script.setAttribute("type", "text/javascript");
+        //         script.src = '../plugins/' + dir;
+        //         document.body.appendChild(script)
+        //         // let scr = document.createElement('scipt');
+        //         // scr.src = 'file://' + path.join(__dirname, '../plugins/', dir);
+        //         // scr.type="text/javascript";
+        //         // // document.appendChild('<scipt src="file://' + path.join(__dirname, '../plugins/', dir)+'><\/script')
+        //         // console.log('src-'+'file://' + path.join(__dirname, '../plugins/', dir))
+        //         // document.body.appendChild(scr);
+        //     });
+        // })
+
+
+
     </script>
 </body>
 

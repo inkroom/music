@@ -1,0 +1,20 @@
+.content {
+  padding: 15px;
+  border-top: #2f353c solid 2px;
+}
+.content > ul > li > span {
+  display: inline-block;
+}
+.content .title {
+  min-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.content .title a {
+  text-decoration: none;
+}
+.content .title a:hover {
+  color: black;
+  text-decoration: aqua;
+}

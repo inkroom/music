@@ -1,0 +1,71 @@
+
+@import 'common.less';
+
+
+#search {
+    position: absolute;
+    display: none;  
+    height: 70%;
+    width: 100%;
+    bottom:0;
+    left: 0;
+    
+
+    >div{
+        background: @search-bg-color;  
+        height: 100%;
+    }
+    .fa-window-close {
+        position: absolute;
+        right: 15px;
+        top: -8px;
+        z-index: 9999;
+        font-size: 22px;
+    }
+    .form {
+        height: @form-height;
+        text-align: center;
+        display: block;
+        width: 100%;
+        position: fixed;
+        padding:5px;
+
+        input {
+            margin-right: 15px;
+            height: @form-height;
+            line-height: @form-height;
+        }
+        select{
+            height: @form-height;
+            line-height: @form-height;
+        }
+    }
+    .result{
+        box-sizing: border-box;
+        height: 98%;
+        padding-top:@form-height + 15;
+        overflow-y:scroll;      
+        
+        li{
+            padding-left: @margin-border;
+        }
+        .title {
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+        
+        .right{
+            float: right;
+            margin-right: @margin-border;
+
+          
+            .time{
+                margin-right: @margin-border - 5;
+            }
+        }
+        
+
+    }
+}
+

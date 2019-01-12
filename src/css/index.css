@@ -1,17 +1,41 @@
 * {
   padding: 0;
   margin: 0;
+  color: #d1d0df;
 }
-head,
+html,
 body {
   height: 100%;
   width: 100%;
+  background-color: #272e36;
+}
+li {
+  list-style: none;
 }
 i {
   cursor: pointer;
 }
+input[type=text] {
+  border: none;
+  border-radius: 10px;
+  padding-left: 8px;
+  background-color: #2f3d4b;
+}
+input[type=text]:focus {
+  border-radius: 10px;
+  border: #9ca6b1 solid 1px;
+  box-shadow: 2px 2px 2px white, 2px -2px 2px white, -2px 2px 2px white, -2px -2px 2px white;
+}
+select {
+  background-color: #5f5252;
+  border: #5f5252 solid 1px;
+}
 .head {
   min-height: 100px;
+  background: #0F2027;
+  /* fallback for old browsers */
+  background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .head > div {
   margin-left: 100px;
@@ -63,21 +87,22 @@ i {
   margin-right: -5px;
 }
 .head .bar .alpha {
+  cursor: pointer;
   float: left;
   position: absolute;
-  top: -1.5px;
+  top: -2px;
   margin-left: -5px;
   height: 15px;
   width: 15px;
-  background: #7da1c5;
+  background: #d0d9e3;
   border-radius: 50%;
 }
 .head .bar .alpha .alpha-bottom {
   position: absolute;
   top: 2px;
   left: 2px;
-  height: 6px;
-  width: 6px;
-  background-color: #7da1c5;
+  height: 10px;
+  width: 10px;
+  background-color: #9ca6b1;
   border-radius: 50%;
 }

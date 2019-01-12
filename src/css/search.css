@@ -1,0 +1,58 @@
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+#search {
+  position: absolute;
+  display: none;
+  height: 70%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+#search > div {
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  height: 100%;
+}
+#search .fa-window-close {
+  position: absolute;
+  right: 15px;
+  top: -8px;
+  z-index: 9999;
+  font-size: 22px;
+}
+#search .form {
+  height: 30px;
+  text-align: center;
+  display: block;
+  width: 100%;
+  position: fixed;
+  padding: 5px;
+}
+#search .form input {
+  margin-right: 15px;
+  height: 30px;
+  line-height: 30px;
+}
+#search .form select {
+  height: 30px;
+  line-height: 30px;
+}
+#search .result {
+  box-sizing: border-box;
+  height: 98%;
+  padding-top: 45px;
+  overflow-y: scroll;
+}
+#search .result li {
+  padding-left: 15px;
+}
+#search .result .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#search .result .right {
+  float: right;
+  margin-right: 15px;
+}
+#search .result .right .time {
+  margin-right: 10px;
+}

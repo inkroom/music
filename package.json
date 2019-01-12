@@ -4,7 +4,8 @@
   "description": "跨平台，多来源音乐播放器",
   "main": "src/index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/inkroom/music/issues"
   },
-  "homepage": "https://github.com/inkroom/music#readme"
+  "homepage": "https://github.com/inkroom/music#readme",
+  "devDependencies": {
+    "electron": "^4.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
