@@ -1,20 +1,37 @@
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 .content {
-  padding: 15px;
-  border-top: #2f353c solid 2px;
+  padding-top: 100px;
+  height: 100%;
+  box-sizing: border-box;
 }
-.content > ul > li > span {
-  display: inline-block;
+.content a {
+  text-decoration: none;
 }
-.content .title {
-  min-width: 60%;
+.content a:hover {
+  text-decoration: underline;
+}
+.right-list {
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+  cursor: default;
+}
+.right-list li {
+  padding-left: 15px;
+  border-top: #bea6a6 solid 1px;
+  border-bottom: #bea6a6 solid 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.right-list .name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.content .title a {
-  text-decoration: none;
+.right-list .right {
+  float: right;
+  margin-right: 15px;
 }
-.content .title a:hover {
-  color: black;
-  text-decoration: aqua;
+.right-list .right .time {
+  margin-right: 10px;
 }

@@ -1,24 +1,52 @@
 
+
+@import "common.less";
+
 .content {
    
-    padding: 15px;
-    border-top: #2f353c solid 2px;
- 
-    >ul>li >span{
-        display: inline-block;
+    padding-top: @head-height;
+
+    height: 100%;
+    // overflow: hidden;
+    box-sizing: border-box;
+
+    a {
+        text-decoration: none;
     }
-    .title{
-        min-width: 60%;
+    a:hover{
+        text-decoration: underline;
+    }
+}
+
+
+//歌曲列表，左侧歌曲名，右侧操作之类的东西
+.right-list{
+    box-sizing: border-box;
+    height: 100%;
+    // padding-top:@form-height + 15;
+    overflow-y:auto;      
+    // margin-top: 15px;
+    cursor: default;
+    li{
+        padding-left: @margin-border;
+        border-top:rgb(190, 166, 166) solid 1px;
+        border-bottom:rgb(190, 166, 166) solid 1px;
+        padding-top:5px;
+        padding-bottom: 5px;
+    }
+    .name {
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
-        a{
-            text-decoration: none;
-        }
-        a:hover{
-            color: black;
-            text-decoration: aqua;
+    }
+    
+    .right{
+        float: right;
+        margin-right: @margin-border;
+
+      
+        .time{
+            margin-right: @margin-border - 5;
         }
     }
-
 }

@@ -16,14 +16,14 @@
 
     <div class="head" id="player">
         <div class="img">
-            <img src="cover.png" :src="music.cover" alt="封面图片">
+            <img src="../img/logo.jpg" :src="music.cover || '../img/logo.jpg'" alt="封面图片">
         </div>
         <div>
-            <div class="title" v-text="music.title">歌曲名称</div>
+            <div class="name" v-text="music.name ? (music.name + ' - 来自:'+ music.originName ) : '请选择或者搜索歌曲'">歌曲名称</div>
             <div class="control">
                 <ul>
                     <li>
-                        <i class="fa " @click="toogle" :class="playing ? 'fa-pause':'fa-play' "></i>
+                        <i class="fa fa-play" @click="toogle" :class="playing ? 'fa-pause':'fa-play' "></i>
                     </li><li>
                         <i class="fa fa-forward" @click="next"></i>
                     </li><li>
@@ -37,48 +37,54 @@
             </div>
             <div class="time">
                 <i class="fa fa-search" @click="search"></i>
-                <span><span style="color:red" v-text="music.now"></span>&nbsp;/&nbsp;<span v-text="music.total"></span></span>
+                <span><span style="color:red" v-text="music.now || '00:00'">00:00</span>&nbsp;/&nbsp;<span v-text="music.total || '00:00'">00:00</span></span>
             </div>
-            <div class="bar" ref="bar" ondrop="drop">
+            <div class="bar" ref="bar">
                 <div class="bar-bottom">
-                    <div class="alpha" :style="{ left:music.rate+'%' }" @mousedown="down">
+                    <div class="alpha" style="left:0" :style="{ left:music.rate ? ( music.rate + '%'):'0' }" @mousedown="down">
                         <div class="alpha-bottom"></div>
                     </div>
-                    <div class="bar-top" :style="{ width:music.rate+'%' }"></div>
+                    <div class="bar-top" style="width:0" :style="{ width:music.rate ?(music.rate+'%'):'0' }"></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="content" id="list">
-        <ul>
-            <li v-for="item in musics">
-                <span class="title"><a :href="item.url" v-text="item.title"></a></span>
-                <span class="time" v-text="item.time"></span>
-                <span class="origin" v-text="item.origin"></span>
+        <ul class="right-list" >
+            <li v-for="( item , index ) in musics" v-cloak>
+                <span class="right">
+                    <span class="time" v-text="item.time"></span>
+                    <span class="origin" v-text="item.originName"></span>
+                    <span><i class="fa fa-trash-o" @click="rm(index)"></i></span>
+                </span>
+                <div class="name"><a href="javascript:void(0);" @click="play(index)" v-text="item.name"></a></div>
             </li>
         </ul>
     </div>
     <div id="search" :style="{ display:show ? 'block':'none' }">
-        <div >
+        <div>
             <i class="fa fa-window-close" @click="show = false"></i>
             <div class="form">
-                <input type="text" v-model="title" placeholder="歌曲名称" @keyup.enter="search" >
+                <input type="text" v-model="name" placeholder="歌曲名称" @keyup.enter="search">
                 <select v-model="origin" @change="search">
-                    <option :value="item.key" v-for="item in origins" v-text="item.value" ></option>
+                    <option :value="item.key" v-for="item in origins" v-text="item.value"></option>
                 </select>
             </div>
-            <div class="result">
-                <ul>
-                    <li v-for="(item ,index) in result">
-                        <span class="title" v-text="item.title">歌曲名称</span>
-                        <span class="right">
-                            <span class="time" v-text="item.time"></span>
-                            <i class="fa fa-play" @click="play(index)"></i>
-                            <i class="fa fa-plus" @click="add(index)"></i>
-                        </span>
-                    </li>
-                </ul>
+            <div>
+                <div class="result right-list">
+                    <ul>
+                        <li v-for="(item , index) in result">
+                            <span class="right">
+                                <span class="time" v-text="item.time + ' ('+item.originName+')'"></span>
+                                <i class="fa fa-play" @click="play(index)"></i>
+                                <i class="fa fa-plus" @click="add(index)"></i>
+                            </span>
+                            <div class="name" v-text="item.name">歌曲名称</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+           
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -92,8 +98,9 @@
             next(random) {
                 return list.next(random);
             },
-            showSearch() {
-                search.show = true;
+            showSearch(toogle) {
+                if(toogle) search.show = !search.show;
+                else search.show = true;
             },
             play(music) {
                 player.music = music;
@@ -102,31 +109,71 @@
                 list.add(music);
             }
         };
-        control.showSearch();
+        // control.showSearch();
 
-        search.result.push({title:'恋爱循环',time:'02:42',origin:'酷狗'})
+        // control.play({name:'aliez',url:'http://fs.w.kugou.com/201901131524/c23b183eb6050d73c4bc5d9657c8448d/G109/M04/07/14/DYcBAFvWpKaAG5DfAEnDhcRa7YY101.mp3',cover:'http://singerimg.kugou.com/uploadpic/softhead/400/20160422/20160422102754867837.jpg'})
+
+        // search.result.push({ title: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // search.result.push({ title: '恋爱循环', time: '02:42', originName: '酷狗',origin:'ku' })
         // control.add({title:'恋爱循环',time:'02:42',origin:'酷狗'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
 
-        // let fs = require('fs');
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // control.add({ name: '恋爱循环', time: '02:42', originName: '酷狗' ,origin:'ku'})
+        // require('../plugins/search_from_163')
 
-        // let path = require('path');
 
-        // fs.readdir(path.join(__dirname, '../plugins'), function (err, dirs) {
-        //     if (err) throw err;
-        //     console.log(dirs);
-        //     dirs.forEach(function (dir) {
-        //         var script = document.createElement("script");
-        //         script.setAttribute("type", "text/javascript");
-        //         script.src = '../plugins/' + dir;
-        //         document.body.appendChild(script)
-        //         // let scr = document.createElement('scipt');
-        //         // scr.src = 'file://' + path.join(__dirname, '../plugins/', dir);
-        //         // scr.type="text/javascript";
-        //         // // document.appendChild('<scipt src="file://' + path.join(__dirname, '../plugins/', dir)+'><\/script')
-        //         // console.log('src-'+'file://' + path.join(__dirname, '../plugins/', dir))
-        //         // document.body.appendChild(scr);
-        //     });
-        // })
+
+        let fs = require('fs');
+        let path = require('path');
+
+        let dev = __dirname.includes('node_modules');
+
+        let real_path = path.join(__dirname,'../plugins');
+        if(dev){//开发者模式
+            real_path = path.join(__dirname.substring(0,__dirname.indexOf('node_modules')),'/src/plugins') ;
+        }
+
+        console.log(real_path);
+        fs.readdir(real_path, function (err, dirs) {
+            if (err) throw err;
+            console.log(dirs);
+            dirs.forEach(function (dir) {
+                let real = path.join(__dirname, '../plugins/', dir);
+                if(dev){
+                    real =  path.join(__dirname.substring(0,__dirname.indexOf('node_modules')),'/src/plugins')
+                    if(dir.includes('.js')){
+                        console.log(path.join(real_path, dir.substring(0,dir.length-3)))
+                        require(path.join(real_path, dir.substring(0,dir.length-3)))
+                    }
+                }else{
+                    //绕开文件夹
+                    if (fs.lstatSync(real).isDirectory()) {
+                        return;
+                    }
+                    require('../plugins/' + dir.substring(0, dir.length - 3));
+                }
+                
+            });
+        })
 
 
 

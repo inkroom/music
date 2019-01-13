@@ -2,7 +2,6 @@
 @color:rgb(209, 208, 223);
 
 
-@head-height:100px;
 @head-bg-color:linear-gradient(to right, #2C5364, #203A43, #0F2027);
 
 
@@ -52,7 +51,7 @@ input[type=text]{
 input[type=text]:focus{
     border-radius: 10px;
     border:#9ca6b1 solid 1px;
-    box-shadow:2px 2px 2px white,2px -2px 2px white,-2px 2px 2px white,-2px -2px 2px white;
+    box-shadow:1px 1px 1px white,1px -1px 1px white,-1px 1px 1px white,-1px -1px 1px white;
 }
 
 select{
@@ -61,13 +60,15 @@ select{
 }
 
 .head {
-    min-height: @head-height;
+    height: @head-height;
     // background-color: @head-bg-color;
     background: #0F2027;  /* fallback for old browsers */
     // background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-    background: @head-bg-color /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
-    >div{
+    background: @head-bg-color; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    position: fixed;
+    width: 100%;
+    top:0;
+    >div {
         // display: inline-block;
         // padding-bottom: 2000px;
         // margin-bottom: -2000px;
@@ -80,13 +81,20 @@ select{
           // 左侧
         float: left;
         margin-left: 0px;
-        min-height: @head-height;
-        min-width: @head-height;
+        max-height: @head-height;
+        max-width: @head-height;
 
         img{
-            min-height: @head-height;
-            min-width: @head-height;
+            max-height: @head-height;
+            max-width: @head-height;
         }
+    }
+    .name{
+        padding-left: @margin-border;
+
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
     }
     .control{
         // margin-right: -5px;
@@ -114,6 +122,7 @@ select{
 
     .bar{
         padding-right: @margin-border;
+        padding-left: @margin-border;
         .bar-bottom{
             position: relative;
             margin: 5px;
@@ -161,9 +170,5 @@ select{
                 border-radius: 50%;
             }
         }
-
-        
-
     }
-   
 }

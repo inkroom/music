@@ -1,3 +1,7 @@
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+[v-cloak] {
+  display: none;
+}
 * {
   padding: 0;
   margin: 0;
@@ -24,18 +28,21 @@ input[type=text] {
 input[type=text]:focus {
   border-radius: 10px;
   border: #9ca6b1 solid 1px;
-  box-shadow: 2px 2px 2px white, 2px -2px 2px white, -2px 2px 2px white, -2px -2px 2px white;
+  box-shadow: 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white, -1px -1px 1px white;
 }
 select {
   background-color: #5f5252;
   border: #5f5252 solid 1px;
 }
 .head {
-  min-height: 100px;
+  height: 100px;
   background: #0F2027;
   /* fallback for old browsers */
   background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
 .head > div {
   margin-left: 100px;
@@ -44,12 +51,18 @@ select {
 .head .img {
   float: left;
   margin-left: 0px;
-  min-height: 100px;
-  min-width: 100px;
+  max-height: 100px;
+  max-width: 100px;
 }
 .head .img img {
-  min-height: 100px;
-  min-width: 100px;
+  max-height: 100px;
+  max-width: 100px;
+}
+.head .name {
+  padding-left: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .head .control ul li {
   text-align: center;
@@ -70,6 +83,7 @@ select {
 }
 .head .bar {
   padding-right: 15px;
+  padding-left: 15px;
 }
 .head .bar .bar-bottom {
   position: relative;

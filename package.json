@@ -5,7 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "test",
-    "start": "electron ."
+    "dev": "electron . dev",
+    "proc":"electron .",
+    "dev-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1"
   },
   "repository": {
     "type": "git",
@@ -22,9 +24,13 @@
   },
   "homepage": "https://github.com/inkroom/music#readme",
   "devDependencies": {
-    "electron": "^4.0.1"
+    "electron": "^4.0.1",
+    "http-server": "^0.11.1"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "asynckit": "^0.4.0",
+    "axios": "^0.18.0",
+    "fs-extra": "^7.0.1",
+    "request": "^2.88.0"
   }
 }

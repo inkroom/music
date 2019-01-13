@@ -1,10 +1,13 @@
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+body {
+  overflow: hidden;
+}
 #search {
   position: absolute;
   display: none;
   height: 70%;
   width: 100%;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
 }
 #search > div {
@@ -23,8 +26,9 @@
   text-align: center;
   display: block;
   width: 100%;
-  position: fixed;
   padding: 5px;
+  box-sizing: border-box;
+  position: fixed;
 }
 #search .form input {
   margin-right: 15px;
@@ -35,24 +39,8 @@
   height: 30px;
   line-height: 30px;
 }
-#search .result {
-  box-sizing: border-box;
-  height: 98%;
+#search .form + div {
+  height: 100%;
   padding-top: 45px;
-  overflow-y: scroll;
-}
-#search .result li {
-  padding-left: 15px;
-}
-#search .result .title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#search .result .right {
-  float: right;
-  margin-right: 15px;
-}
-#search .result .right .time {
-  margin-right: 10px;
+  box-sizing: border-box;
 }

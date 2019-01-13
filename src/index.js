@@ -1,21 +1,33 @@
 const { app, BrowserWindow } = require('electron');
 
+let dev = process.argv.includes('dev')
 
 let win = null;
 function createWindow() {
     if (win == null) {
-        win = new BrowserWindow({
-            width: 800,
-            height: 600
-        })
+        if(dev){
+            win = new BrowserWindow({
+                width: 1200,
+                height: 800
+            })
+            win.on('close', function () {
+                win = null;
+            }).loadURL('http://localhost:8001/src/html/index.html')
+            win.webContents.openDevTools({ mode: 'bottom' })
 
-
-        win.on('close', function () {
-            win = null;
-        }).loadFile('src/html/index.html')
+            console.log('开发模式');
+        }else{
+            win = new BrowserWindow({
+                width:800,
+                height:600
+            })
+            win.on('close',function(){win = null})
+            .loadFile('src/html/index.html');
+            console.log(win)
+        }
     }
     win.show();
-    win.webContents.openDevTools({ mode: 'detach' })
+    
 }
 
 //解决音频不能自动播放限制

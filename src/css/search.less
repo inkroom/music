@@ -2,12 +2,15 @@
 @import 'common.less';
 
 
+body{
+    overflow: hidden;
+}
 #search {
     position: absolute;
     display: none;  
     height: 70%;
     width: 100%;
-    bottom:0;
+    bottom: -1px;//底部出现音乐列表部分的滚动条
     left: 0;
     
 
@@ -27,9 +30,9 @@
         text-align: center;
         display: block;
         width: 100%;
-        position: fixed;
         padding:5px;
-
+        box-sizing: border-box;
+        position: fixed;
         input {
             margin-right: 15px;
             height: @form-height;
@@ -40,30 +43,40 @@
             line-height: @form-height;
         }
     }
-    .result{
+    .form + div{
+        height: 100%;
+        padding-top:@form-height+15px;
         box-sizing: border-box;
-        height: 98%;
-        padding-top:@form-height + 15;
-        overflow-y:scroll;      
+    }
+    .result{
+        // box-sizing: border-box;
+        // height: 100%;
+        // // padding-top:@form-height + 15;
+        // overflow-y:scroll;      
+        // // margin-top: 15px;
+        // cursor: default;
+        // li{
+        //     padding-left: @margin-border;
+        //     border-top:rgb(190, 166, 166) solid 1px;
+        //     border-bottom:rgb(190, 166, 166) solid 1px;
+        //     padding-top:5px;
+        //     padding-bottom: 5px;
+        // }
+        // .name {
+        //     overflow: hidden;
+        //     text-overflow:ellipsis;
+        //     white-space: nowrap;
+        // }
         
-        li{
-            padding-left: @margin-border;
-        }
-        .title {
-            overflow: hidden;
-            text-overflow:ellipsis;
-            white-space: nowrap;
-        }
-        
-        .right{
-            float: right;
-            margin-right: @margin-border;
+        // .right{
+        //     float: right;
+        //     margin-right: @margin-border;
 
           
-            .time{
-                margin-right: @margin-border - 5;
-            }
-        }
+        //     .time{
+        //         margin-right: @margin-border - 5;
+        //     }
+        // }
         
 
     }
