@@ -15,6 +15,21 @@
 就这样
 
 
+### 构建步骤
+
+建议使用vscode，并且安装less easy插件，自动编译less文件
+
+``` bash
+    git clone https://github.com/inkroom/music.git
+    cd music
+    ## 开发者模式
+    npm run dev-server ##这会启动一个http server
+    npm run dev
+
+    ## 生产模式
+    npm run proc
+```
+
 ### 音乐源js规范
 
 - js文件存储在plugins目录，入口文件直接放plugins根目录，依赖文件建立文件夹存放
@@ -23,17 +38,32 @@
     - key，每一个插件唯一的key，自定义
     - value，插件名字，显示在搜索下拉框以及音乐来源的文字，如酷狗
     - bean，object对象，有search(name,page,callback)和index(music,callback)方法，出错直接回调传递null
-        - search要求回调传递Array对象
-            > {name:'歌曲名',time:'03:32'}必需；其余自用属性随便添加
-        - index 要求在原有music上添加url属性，执行可播放音乐文件
+        - search方法
+            > search(name:string,page:interge,callback:function(music?))
+        - index 
+            > index(music?,callback:function(music?))
+        - import
+            > import(url:string,callback:function(musics))
         
+### features
 
-### 待解决
-    - 随便点击会导致音频停顿
-    - 暂停后随便点会再次播放
-    - 这两个应该是一回事，（停顿是暂停后在播放）
+    - 网易云导入歌单
+    - 点击进度条直接播放
+    - 音量调节
+    - 播放模式 - 是否开启随机播放
+    - 是否自动下一曲
+    - 歌词（待定）
+
 
 ### change log
+
+#### 2018-1-14
+
+    - 修复暂停后随便点击再次播放bug
+    - 修复随便点击导致音频停顿bug
+    - 完成酷狗歌单导入功能
+    - 完成播放完自动下一曲功能
+    - 歌曲添加歌手属性
 
 #### 2018-1-13
     - 修正二次拖拽错误
@@ -44,7 +74,7 @@
     - 将歌单和当前播放状态存入配置文件
 
 #### 2018-1-12
-    - 引入网易云音乐源，源码来自[网易云音乐API node版](https://github.com/Binaryify/NeteaseCloudMusicApi)
+    - 引入网易云音乐源，源码来自 <a href="https://github.com/Binaryify/NeteaseCloudMusicApi">网易云音乐API node版</a>
     - 修改部分UI
 
 #### 2018-1-11

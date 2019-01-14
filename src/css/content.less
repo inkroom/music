@@ -1,11 +1,18 @@
 
-
 @import "common.less";
+
+
+@import-height:50px;
+@import-bg-color:rgb(83, 71, 71);
+
+@title-height:30px;
+@title-border-size:2px;
+@title-border-color:rgb(116, 61, 61);
 
 .content {
    
     padding-top: @head-height;
-
+    padding-bottom: @title-height;
     height: 100%;
     // overflow: hidden;
     box-sizing: border-box;
@@ -16,37 +23,41 @@
     a:hover{
         text-decoration: underline;
     }
-}
+    >div{
+      height: @title-height;
+      padding-left: @margin-border;
+
+      border-bottom: @title-border-color solid @title-border-size; 
+
+     
+    }
+
+    .right-list{
+      padding-bottom:  @margin-border;
+    }
 
 
-//歌曲列表，左侧歌曲名，右侧操作之类的东西
-.right-list{
-    box-sizing: border-box;
-    height: 100%;
-    // padding-top:@form-height + 15;
-    overflow-y:auto;      
-    // margin-top: 15px;
-    cursor: default;
-    li{
-        padding-left: @margin-border;
-        border-top:rgb(190, 166, 166) solid 1px;
-        border-bottom:rgb(190, 166, 166) solid 1px;
-        padding-top:5px;
-        padding-bottom: 5px;
-    }
-    .name {
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-    }
-    
-    .right{
-        float: right;
-        margin-right: @margin-border;
+    .import_form {
+      position: absolute;
+      left: 30%;
+      top: 20%;
 
-      
-        .time{
-            margin-right: @margin-border - 5;
-        }
+      height: @import-height;
+
+      padding:@margin-border;
+
+
+      text-align: center;
+      vertical-align: middle;
+
+      background-color: @import-bg-color;
+      * {
+        height: @import-height - 10;
+      }
+      input[type=text]{
+        width: 300px;
+      }
     }
+
+
 }

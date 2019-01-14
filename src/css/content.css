@@ -1,14 +1,6 @@
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-.content {
-  padding-top: 100px;
-  height: 100%;
-  box-sizing: border-box;
-}
-.content a {
-  text-decoration: none;
-}
-.content a:hover {
-  text-decoration: underline;
+[v-cloak] {
+  display: none;
 }
 .right-list {
   box-sizing: border-box;
@@ -34,4 +26,40 @@
 }
 .right-list .right .time {
   margin-right: 10px;
+}
+.content {
+  padding-top: 100px;
+  padding-bottom: 30px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.content a {
+  text-decoration: none;
+}
+.content a:hover {
+  text-decoration: underline;
+}
+.content > div {
+  height: 30px;
+  padding-left: 15px;
+  border-bottom: #743d3d solid 2px;
+}
+.content .right-list {
+  padding-bottom: 15px;
+}
+.content .import_form {
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  height: 50px;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #534747;
+}
+.content .import_form * {
+  height: 40px;
+}
+.content .import_form input[type=text] {
+  width: 300px;
 }

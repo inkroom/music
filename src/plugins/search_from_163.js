@@ -15,8 +15,9 @@
                 offset: page
             }
             let res = wangRequest(
-                'POST', `https://music.163.com/weapi/search/get`, data,
-                { crypto: 'weapi' }
+                'POST', `https://music.163.com/weapi/search/get`, data, {
+                    crypto: 'weapi'
+                }
             ).then(function (data) {
                 console.log(data);
                 data = data.body;
@@ -29,6 +30,7 @@
                             name: data.result.songs[i].name,
                             time: transTime(data.result.songs[i].duration / 1000),
                             id: data.result.songs[i].id,
+                            author: data.result.songs[i].atrist.name,
                             // br: data.result.songs[i].m.br
                         }
                         if (data.result.songs[i].m) {
@@ -48,6 +50,9 @@
             })
             callback(null);
         },
+        equals(music1, music2) {
+            return music1.id == music2.id;
+        },
         index(music, callback) {
             // https://music.163.com/weapi/v3/song/detail
             const data = {
@@ -57,8 +62,9 @@
             console.log(data);
 
             let res = wangRequest(
-                'POST', `https://music.163.com/weapi/song/enhance/player/url`, data,
-                { crypto: 'weapi' }
+                'POST', `https://music.163.com/weapi/song/enhance/player/url`, data, {
+                    crypto: 'weapi'
+                }
             ).then(function (data) {
                 console.log(data);
                 data = data.body;
@@ -69,8 +75,9 @@
                         if (music.album) {
                             //获取封面
                             wangRequest(
-                                'POST', `https://music.163.com/weapi/v1/album/${music.album}`, {},
-                                { crypto: 'weapi' }
+                                'POST', `https://music.163.com/weapi/v1/album/${music.album}`, {}, {
+                                    crypto: 'weapi'
+                                }
                             ).then(function (data) {
                                 console.log(data);
                                 if (data.body.code == 200)
@@ -98,5 +105,5 @@
             callback(null);
         }
     }
-    search.install('163', '网易云', wang);
+    control.install('163', '网易云', wang);
 })();

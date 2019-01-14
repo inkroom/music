@@ -6,8 +6,9 @@
   "scripts": {
     "test": "test",
     "dev": "electron . dev",
-    "proc":"electron .",
-    "dev-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1"
+    "proc": "node node_modules/less/bin/lessc ./src/css/*.less && electron .",
+    "dev-server": "node ./src/dev.js",
+    "http-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,8 @@
   "homepage": "https://github.com/inkroom/music#readme",
   "devDependencies": {
     "electron": "^4.0.1",
-    "http-server": "^0.11.1"
+    "http-server": "^0.11.1",
+    "less": "^3.9.0"
   },
   "dependencies": {
     "asynckit": "^0.4.0",

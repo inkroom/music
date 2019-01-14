@@ -19,7 +19,7 @@
             <img src="../img/logo.jpg" :src="music.cover || '../img/logo.jpg'" alt="封面图片">
         </div>
         <div>
-            <div class="name" v-text="music.name ? (music.name + ' - 来自:'+ music.originName ) : '请选择或者搜索歌曲'">歌曲名称</div>
+            <div class="name" v-text="music.name ? (music.name + ' - ' + music.author + ' (来自:'+ music.originName+')' ) : '请选择或者搜索歌曲'">歌曲名称</div>
             <div class="control">
                 <ul>
                     <li>
@@ -50,6 +50,13 @@
         </div>
     </div>
     <div class="content" id="list">
+        <div v-cloak v-if="imported" class="import_form">
+            <input type="text" v-model="url" placeholder="歌曲分享地址" @keyup.enter="import_music">
+            <select v-model="origin" @change="import_music">
+                <option :value="item.key" v-for="item in origins" v-text="item.value"></option>
+            </select>
+        </div>
+        <div><span>歌曲列表</span> <span><a href="javascript:void(0)" @click='imported = !imported'>导入歌曲</a></span></div>
         <ul class="right-list" >
             <li v-for="( item , index ) in musics" v-cloak>
                 <span class="right">
@@ -57,7 +64,7 @@
                     <span class="origin" v-text="item.originName"></span>
                     <span><i class="fa fa-trash-o" @click="rm(index)"></i></span>
                 </span>
-                <div class="name"><a href="javascript:void(0);" @click="play(index)" v-text="item.name"></a></div>
+                <div class="name"><a href="javascript:void(0);" @click="play(index)" v-text="item.name + ' - ' + item.author"></a></div>
             </li>
         </ul>
     </div>
@@ -79,7 +86,7 @@
                                 <i class="fa fa-play" @click="play(index)"></i>
                                 <i class="fa fa-plus" @click="add(index)"></i>
                             </span>
-                            <div class="name" v-text="item.name">歌曲名称</div>
+                            <div class="name" v-text="item.name + ' - ' + item.author">歌曲名称</div>
                         </li>
                     </ul>
                 </div>
@@ -89,6 +96,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+
     <script src="../js/common.js"></script>
     <script src="../js/player.js"></script>
     <script src="../js/list.js"></script>
@@ -96,7 +104,15 @@
     <script>
         window.control = {
             next(random) {
-                return list.next(random);
+                let _this = this;
+                let next = list.next(random,function(music){//有可能还没有播放地址
+                    if(music){
+                        _this.play(music);
+                    }
+                });
+                if(next){
+                    this.play(next);
+                }
             },
             showSearch(toogle) {
                 if(toogle) search.show = !search.show;
@@ -107,6 +123,10 @@
             },
             add(music) {
                 list.add(music);
+            },
+            install(key,value,bean){
+                search.install(key,value,bean);
+                list.install(key,value,bean);
             }
         };
         // control.showSearch();

@@ -8,7 +8,9 @@ function createWindow() {
         if(dev){
             win = new BrowserWindow({
                 width: 1200,
-                height: 800
+                height: 800,
+                icon:'src/img/logo.jpg',
+                webPreferences: {webSecurity: false},
             })
             win.on('close', function () {
                 win = null;
@@ -19,7 +21,8 @@ function createWindow() {
         }else{
             win = new BrowserWindow({
                 width:800,
-                height:600
+                height:600,
+                icon:'src/img/logo.jpg'
             })
             win.on('close',function(){win = null})
             .loadFile('src/html/index.html');
