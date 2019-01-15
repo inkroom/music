@@ -56,7 +56,7 @@
     audio.onended = function () {
         player.playing = false;
 
-        if(player.random){
+        if (player.random) {
             control.next(player.random);
         }
     }
@@ -126,8 +126,8 @@
         mounted() {
             var _this = this;
             this.$watch('music', function (nv, ov) {
-                if(nv.url===''){//可能是没有版权等原因
-                    if(random){
+                if (nv.url === '') { //可能是没有版权等原因
+                    if (_this.random) {
                         control.next(_this.random);
                         return;
                     }
@@ -208,16 +208,21 @@
                 control.showSearch(true);
             },
             seek(rate) { //
-                console.log(rate);
-                if (!rate) { //没有值
-                    console.log('seek rate 没有只')
-                } else {
-                    if (audio.fastSeek)
-                        audio.fastSeek((audio.duration * rate / 100))
-                    else {
-                        audio.currentTime = (audio.duration * rate / 100);
-                        audio.play();//暂停的情况下必须调用才能继续播放，播放中调用该方法无影响
-                    }
+                console.log('seek='+rate);
+                if (typeof (rate) === 'object') { //直接点击进度条
+                    let event = rate;
+                    //计算偏移量，使用最底层的偏移量，如果点击的是高亮的进度，target偏移量会为0
+                    rate = (event.pageX - this.$refs['bar'].offsetLeft ) / this.$refs['bar'].offsetWidth * 100;
+                }
+                if (audio.fastSeek)
+                    audio.fastSeek((audio.duration * rate / 100))
+                else {
+                    console.log(audio.duration);
+                    console.log(rate);
+
+                    audio.currentTime = (audio.duration * (rate / 100));
+                    console.log(audio.currentTime)
+                    audio.play(); //暂停的情况下必须调用才能继续播放，播放中调用该方法无影响
                 }
             },
             down(event) {
@@ -243,6 +248,7 @@
                             // console.log('变换的像素=' + (event.pageX - _this.mx))
 
                             _this.music.rate = ((event.pageX - _this.mx) / _this.$refs['bar'].offsetWidth) * 100;
+                            console.log('moving='+_this.music.rate);
                         }
                     }
                 }

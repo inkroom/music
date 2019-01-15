@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="stylesheet" href="../css/content.css" />
     <link rel="stylesheet" href="../css/search.css" />
+
+    <!-- <link rel="stylesheet" href="../lib/Optiscroll-3.2.0/dist/optiscroll.css"/> -->
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/vue-happy-scroll/docs/happy-scroll.css"> -->
 </head>
 
 <body>
@@ -39,12 +43,12 @@
                 <i class="fa fa-search" @click="search"></i>
                 <span><span style="color:red" v-text="music.now || '00:00'">00:00</span>&nbsp;/&nbsp;<span v-text="music.total || '00:00'">00:00</span></span>
             </div>
-            <div class="bar" ref="bar">
-                <div class="bar-bottom">
+            <div class="bar">
+                <div class="bar-bottom" @click="seek" ref="bar">
                     <div class="alpha" style="left:0" :style="{ left:music.rate ? ( music.rate + '%'):'0' }" @mousedown="down">
                         <div class="alpha-bottom"></div>
                     </div>
-                    <div class="bar-top" style="width:0" :style="{ width:music.rate ?(music.rate+'%'):'0' }"></div>
+                    <div class="bar-top" @click="seek" style="width:0" :style="{ width:music.rate ?(music.rate+'%'):'0' }"></div>
                 </div>
             </div>
         </div>
@@ -57,7 +61,10 @@
             </select>
         </div>
         <div><span>歌曲列表</span> <span><a href="javascript:void(0)" @click='imported = !imported'>导入歌曲</a></span></div>
-        <ul class="right-list" >
+
+
+        <!-- <happy-scroll color="rgba(51,51,51,0.2)"> -->
+        <ul class="right-list">
             <li v-for="( item , index ) in musics" v-cloak>
                 <span class="right">
                     <span class="time" v-text="item.time"></span>
@@ -67,6 +74,10 @@
                 <div class="name"><a href="javascript:void(0);" @click="play(index)" v-text="item.name + ' - ' + item.author"></a></div>
             </li>
         </ul>
+        <!-- </happy-scroll> -->
+
+
+
     </div>
     <div id="search" :style="{ display:show ? 'block':'none' }">
         <div>
@@ -91,7 +102,7 @@
                     </ul>
                 </div>
             </div>
-           
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -101,21 +112,28 @@
     <script src="../js/player.js"></script>
     <script src="../js/list.js"></script>
     <script src="../js/search.js"></script>
+    <!-- <script src="../lib/scroll/js/scrollbot.min.js"></script> -->
+    <!-- <script src="../lib//Optiscroll-3.2.0/dist/optiscroll.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/vue-happy-scroll/docs/happy-scroll.min.js"></script> -->
     <script>
+        document.onclick = function (event) {
+            console.log(event.target);
+        }
+
         window.control = {
             next(random) {
                 let _this = this;
-                let next = list.next(random,function(music){//有可能还没有播放地址
-                    if(music){
+                let next = list.next(random, function (music) { //有可能还没有播放地址
+                    if (music) {
                         _this.play(music);
                     }
                 });
-                if(next){
+                if (next) {
                     this.play(next);
                 }
             },
             showSearch(toogle) {
-                if(toogle) search.show = !search.show;
+                if (toogle) search.show = !search.show;
                 else search.show = true;
             },
             play(music) {
@@ -124,11 +142,29 @@
             add(music) {
                 list.add(music);
             },
-            install(key,value,bean){
-                search.install(key,value,bean);
-                list.install(key,value,bean);
+            install(key, value, bean) {
+                search.install(key, value, bean);
+                list.install(key, value, bean);
             }
         };
+        setTimeout(function () {
+
+            // var element = document.querySelector('.right-list')
+            // var myOptiscrollInstance = new Optiscroll(element, {
+            //     maxTrackSize: 50,
+            //     minTrackSize: 20
+            // });
+            // 滚动条优化
+            // let scroll = document.getElementsByClassName('right-list');
+            // for (var i = 0; i < scroll.length; i++) {
+            //     console.log('加载进度条')
+            //     var customScroll = new scrollbot('.right-list', 5)
+            // }
+        }, 1000)
+
+
+
+
         // control.showSearch();
 
         // control.play({name:'aliez',url:'http://fs.w.kugou.com/201901131524/c23b183eb6050d73c4bc5d9657c8448d/G109/M04/07/14/DYcBAFvWpKaAG5DfAEnDhcRa7YY101.mp3',cover:'http://singerimg.kugou.com/uploadpic/softhead/400/20160422/20160422102754867837.jpg'})
@@ -167,9 +203,9 @@
 
         let dev = __dirname.includes('node_modules');
 
-        let real_path = path.join(__dirname,'../plugins');
-        if(dev){//开发者模式
-            real_path = path.join(__dirname.substring(0,__dirname.indexOf('node_modules')),'/src/plugins') ;
+        let real_path = path.join(__dirname, '../plugins');
+        if (dev) { //开发者模式
+            real_path = path.join(__dirname.substring(0, __dirname.indexOf('node_modules')), '/src/plugins');
         }
 
         console.log(real_path);
@@ -178,25 +214,23 @@
             console.log(dirs);
             dirs.forEach(function (dir) {
                 let real = path.join(__dirname, '../plugins/', dir);
-                if(dev){
-                    real =  path.join(__dirname.substring(0,__dirname.indexOf('node_modules')),'/src/plugins')
-                    if(dir.includes('.js')){
-                        console.log(path.join(real_path, dir.substring(0,dir.length-3)))
-                        require(path.join(real_path, dir.substring(0,dir.length-3)))
+                if (dev) {
+                    real = path.join(__dirname.substring(0, __dirname.indexOf('node_modules')),
+                        '/src/plugins')
+                    if (dir.includes('.js')) {
+                        console.log(path.join(real_path, dir.substring(0, dir.length - 3)))
+                        require(path.join(real_path, dir.substring(0, dir.length - 3)))
                     }
-                }else{
+                } else {
                     //绕开文件夹
                     if (fs.lstatSync(real).isDirectory()) {
                         return;
                     }
                     require('../plugins/' + dir.substring(0, dir.length - 3));
                 }
-                
+
             });
         })
-
-
-
     </script>
 </body>
 
