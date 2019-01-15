@@ -28,13 +28,17 @@
                 <ul>
                     <li>
                         <i class="fa fa-play" @click="toogle" :class="playing ? 'fa-pause':'fa-play' "></i>
-                    </li><li>
+                    </li>
+                    <li>
                         <i class="fa fa-forward" @click="next"></i>
-                    </li><li>
+                    </li>
+                    <li>
                         <i class="fa fa-random"></i>
-                    </li><li>
+                    </li>
+                    <li>
                         <i class="fa fa-volume-up"></i>
-                    </li><li>
+                    </li>
+                    <li>
                         <i class="fa fa-list"></i>
                     </li>
                 </ul>
@@ -62,18 +66,23 @@
         </div>
         <div><span>歌曲列表</span> <span><a href="javascript:void(0)" @click='imported = !imported'>导入歌曲</a></span></div>
 
+        <ink-scroll ink_height="100%">
+            <slot>
+                <ul class="">
+                    <li v-for="( item , index ) in musics" v-cloak>
+                        <span class="right">
+                            <span class="time" v-text="item.time"></span>
+                            <span class="origin" v-text="item.originName"></span>
+                            <span><i class="fa fa-trash-o" @click="rm(index)"></i></span>
+                        </span>
+                        <div class="name"><a href="javascript:void(0);" @click="play(index)" v-text="item.name + ' - ' + item.author"></a></div>
+                    </li>
+                </ul>
 
+            </slot>
+        </ink-scroll>
         <!-- <happy-scroll color="rgba(51,51,51,0.2)"> -->
-        <ul class="right-list">
-            <li v-for="( item , index ) in musics" v-cloak>
-                <span class="right">
-                    <span class="time" v-text="item.time"></span>
-                    <span class="origin" v-text="item.originName"></span>
-                    <span><i class="fa fa-trash-o" @click="rm(index)"></i></span>
-                </span>
-                <div class="name"><a href="javascript:void(0);" @click="play(index)" v-text="item.name + ' - ' + item.author"></a></div>
-            </li>
-        </ul>
+
         <!-- </happy-scroll> -->
 
 
@@ -90,16 +99,19 @@
             </div>
             <div>
                 <div class="result right-list">
-                    <ul>
-                        <li v-for="(item , index) in result">
-                            <span class="right">
-                                <span class="time" v-text="item.time + ' ('+item.originName+')'"></span>
-                                <i class="fa fa-play" @click="play(index)"></i>
-                                <i class="fa fa-plus" @click="add(index)"></i>
-                            </span>
-                            <div class="name" v-text="item.name + ' - ' + item.author">歌曲名称</div>
-                        </li>
-                    </ul>
+                    <ink-scroll ink_height="100%">
+                        <ul>
+                            <li v-for="(item , index) in result">
+                                <span class="right">
+                                    <span class="time" v-text="item.time + ' ('+item.originName+')'"></span>
+                                    <i class="fa fa-play" @click="play(index)"></i>
+                                    <i class="fa fa-plus" @click="add(index)"></i>
+                                </span>
+                                <div class="name" v-text="item.name + ' - ' + item.author">歌曲名称</div>
+                            </li>
+                        </ul>
+                    </ink-scroll>
+
                 </div>
             </div>
 
@@ -112,6 +124,8 @@
     <script src="../js/player.js"></script>
     <script src="../js/list.js"></script>
     <script src="../js/search.js"></script>
+
+    <script src="../lib/scroll/ink-scroll.js"></script>
     <!-- <script src="../lib/scroll/js/scrollbot.min.js"></script> -->
     <!-- <script src="../lib//Optiscroll-3.2.0/dist/optiscroll.min.js"></script> -->
     <!-- <script src="https://unpkg.com/vue-happy-scroll/docs/happy-scroll.min.js"></script> -->

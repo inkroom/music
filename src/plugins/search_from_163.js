@@ -30,7 +30,7 @@
                             name: data.result.songs[i].name,
                             time: transTime(data.result.songs[i].duration / 1000),
                             id: data.result.songs[i].id,
-                            author: data.result.songs[i].atrist.name,
+                            author: data.result.songs[i].artists[0].name,
                             // br: data.result.songs[i].m.br
                         }
                         if (data.result.songs[i].m) {

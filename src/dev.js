@@ -50,7 +50,7 @@ function complie(abpath) {
     console.log('编译' + abpath)
     let data = fs.readFileSync(abpath, 'utf8');
     less.render(data, (err, css) => {
-        if (err) throw err;
+        if (err) {console.log(err);return;};
         fs.writeFileSync(abpath.substring(0, abpath.length - 5) + '.css', css.css);
     })
 

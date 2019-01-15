@@ -2,29 +2,28 @@
 [v-cloak] {
   display: none;
 }
-.right-list {
+.ink-scroll-container {
+  height: 100% !important;
   box-sizing: border-box;
-  height: 100%;
-  overflow-y: auto;
   cursor: default;
 }
-.right-list li {
+.ink-scroll-container li {
   padding-left: 15px;
   border-top: #bea6a6 solid 1px;
   border-bottom: #bea6a6 solid 1px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.right-list .name {
+.ink-scroll-container .name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.right-list .right {
+.ink-scroll-container .right {
   float: right;
   margin-right: 15px;
 }
-.right-list .right .time {
+.ink-scroll-container .right .time {
   margin-right: 10px;
 }
 .content {
@@ -44,7 +43,7 @@
   padding-left: 15px;
   border-bottom: #743d3d solid 2px;
 }
-.content .right-list {
+.content ul {
   padding-bottom: 15px;
 }
 .content .import_form {
