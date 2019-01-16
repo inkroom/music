@@ -110,6 +110,7 @@ function writeJSON(){
     })
 
     window.list = {
+        vue:vue,
         next(random,callback) {
             let music = null;
             if (random) {
