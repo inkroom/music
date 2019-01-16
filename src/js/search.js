@@ -13,9 +13,18 @@
             origins: [],
             bean: {
 
-            }
+            },
+            scroll: 1
         },
         mounted() {
+            let _this = this;
+            this.$watch('show', function (nv, ov) {
+                if (nv) {
+                    
+                    _this.scroll += 1;
+                }
+            })
+
         },
         methods: {
             // show() { }
@@ -26,7 +35,7 @@
                         let _this = this;
                         bean.search(this.name, 1, function (musics) {
                             console.log(musics);
-                            if (musics == null) {//请求错误
+                            if (musics == null) { //请求错误
 
                             } else {
                                 for (var i = 0; i < musics.length; i++) {
@@ -42,7 +51,7 @@
                                 _this.result = musics
                             }
                         });
-                    } else {//没有对应的值
+                    } else { //没有对应的值
 
                     }
                 }
@@ -56,20 +65,20 @@
                 console.log(music);
                 if (music.url) {
                     control.play(music);
-                } else {//查询对应url
+                } else { //查询对应url
                     //获取对应的bean
                     if (this.bean[music.origin]) {
                         let _this = this;
                         this.bean[music.origin].index(music, function (n_music) {
                             console.log(n_music);
-                            if (n_music == null) {//请求错误
+                            if (n_music == null) { //请求错误
 
                             } else {
                                 _this.result[index] = n_music
                                 control.play(n_music);
                             }
                         });
-                    } else {//没有对应的值
+                    } else { //没有对应的值
 
                     }
 
@@ -82,20 +91,23 @@
                     let _this = this;
                     this.bean[music.origin].index(music, function (n_music) {
                         console.log(n_music);
-                        if (n_music == null) {//请求错误
+                        if (n_music == null) { //请求错误
 
                         } else {
                             _this.result[index] = n_music
                             control.add(n_music);
                         }
                     });
-                } else {//没有对应的值
+                } else { //没有对应的值
 
                 }
             },
-            install(key, value, bean) {//加载对应的库,每个音乐源js文件都需要调用该方法注册
+            install(key, value, bean) { //加载对应的库,每个音乐源js文件都需要调用该方法注册
                 this.bean[key] = bean;
-                this.origins.push({ key: key, value: value })
+                this.origins.push({
+                    key: key,
+                    value: value
+                })
             }
 
         }

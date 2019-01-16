@@ -98,8 +98,8 @@
                 </select>
             </div>
             <div>
-                <div class="result right-list">
-                    <ink-scroll ink_height="100%">
+                <!-- <div class="result "> -->
+                    <ink-scroll ink_height="100%" :scroll="scroll">
                         <ul>
                             <li v-for="(item , index) in result">
                                 <span class="right">
@@ -112,7 +112,7 @@
                         </ul>
                     </ink-scroll>
 
-                </div>
+                <!-- </div> -->
             </div>
 
         </div>
