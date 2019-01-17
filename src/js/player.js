@@ -61,6 +61,14 @@
         }
     }
 
+    audio.onerror = function () {
+        // 可能出现的版权限制等情况
+
+        //等等情况
+        player.$layer.msg('');
+        control.next(player.random);
+    }
+
 
     //轮询监听播放进度
     function listener_rate(event) {
@@ -208,11 +216,11 @@
                 control.showSearch(true);
             },
             seek(rate) { //
-                console.log('seek='+rate);
+                console.log('seek=' + rate);
                 if (typeof (rate) === 'object') { //直接点击进度条
                     let event = rate;
                     //计算偏移量，使用最底层的偏移量，如果点击的是高亮的进度，target偏移量会为0
-                    rate = (event.pageX - this.$refs['bar'].offsetLeft ) / this.$refs['bar'].offsetWidth * 100;
+                    rate = (event.pageX - this.$refs['bar'].offsetLeft) / this.$refs['bar'].offsetWidth * 100;
                 }
                 if (audio.fastSeek)
                     audio.fastSeek((audio.duration * rate / 100))
@@ -248,7 +256,7 @@
                             // console.log('变换的像素=' + (event.pageX - _this.mx))
 
                             _this.music.rate = ((event.pageX - _this.mx) / _this.$refs['bar'].offsetWidth) * 100;
-                            console.log('moving='+_this.music.rate);
+                            console.log('moving=' + _this.music.rate);
                         }
                     }
                 }

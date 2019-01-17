@@ -46,6 +46,9 @@
 .content ul {
   padding-bottom: 15px;
 }
+.content .fa-hand-o-right {
+  color: #7ed23e;
+}
 .content .import_form {
   position: absolute;
   left: 30%;

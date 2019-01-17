@@ -4,14 +4,27 @@
 (function () {
 
 
+    music={
+        total:'05:24',
+        name:'歌曲名',
+        author:'歌手',
+        origin:'来源key',
+        oroginName:'来源name，如酷狗',
+        
+    }
+
     let fse = require('fs-extra');
     let path = require('path');
 
     let beans = {};
 
-function writeJSON(){
-    fse.writeJSON('../config/list.bat', vue.musics);
-}
+    function writeJSON() {
+        // let temp = {index:vue.index,musics:vue.musics}
+        fse.writeJSON('../config/list.bat', {
+            index: vue.index,
+            musics: vue.musics
+        });
+    }
 
     let vue = new Vue({
         el: '#list',
@@ -33,17 +46,21 @@ function writeJSON(){
             fse.ensureFile('../config/list.bat').then(function () {
                 fse.readJSON('../config/list.bat', function (err, value) {
                     if (err) throw err;
-                    if (value)
-                        _this.musics = value;
-                    console.log(_this.musics);
+                    if (value) {
+                        _this.index = value.index;
+                        _this.musics = value.musics;
+                    }
                 })
             })
 
         },
         mounted() {
             this.$watch('musics', function (nv, ov) {
-               writeJSON();
-            })
+                writeJSON();
+            });
+            this.$watch('index', function () {
+                writeJSON()
+            });
         },
         methods: {
             random() {
@@ -110,27 +127,37 @@ function writeJSON(){
     })
 
     window.list = {
-        vue:vue,
-        next(random,callback) {
+        update(music) {
+            for (var i = 0; i < vue.musics.length; i++) {
+
+                let bean = beans[vue.musics[i].origin];
+                if (bean.equals(music, vue.musics[i])) {
+                    vue.musics[i] = music;
+                    break;
+                }
+
+            }
+        },
+        next(random, callback) {
             let music = null;
             if (random) {
                 if (vue.musics.length == 0) return null;
                 let index = Math.floor(Math.random() * vue.musics.length);
                 vue.index = index;
-                music= vue.musics[index];
+                music = vue.musics[index];
             } else {
                 index = (index + 1) % vue.musics.length;
-                music= vue.musics[index];
+                music = vue.musics[index];
             }
-            if(music && music.url) return music;
-            beans[music.origin].index(music,function(music){
+            if (music && music.url) return music;
+            beans[music.origin].index(music, function (music) {
                 callback(music);
-            }) ;
+            });
         },
         add(music) {
 
-            for(var i=0;i<music.length;i++){//避免重复添加
-                if(musics[i].origin == music.origin && !beans[music.origin].equals(music,musics[i])){
+            for (var i = 0; i < music.length; i++) { //避免重复添加
+                if (musics[i].origin == music.origin && !beans[music.origin].equals(music, musics[i])) {
                     vue.musics.push(music);
                 }
             }
