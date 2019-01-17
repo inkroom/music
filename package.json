@@ -9,7 +9,7 @@
     "dev-server": "node ./src/dev.js",
     "http-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1",
     "web-pack": "cross-env NODE_ENV=development webpack-dev-server",
-    "test":"webpack --mode development"
+    "pack-linux": "electron-packager ./ music --linux --all --out ./out --overwrite --asar"
   },
   "repository": {
     "type": "git",
@@ -29,10 +29,13 @@
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "electron": "^4.0.1",
+    "electron-installer-debian": "^1.1.0",
+    "electron-packager": "^13.0.1",
     "http-server": "^0.11.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "style-loader": "^0.23.1",
+    "typedarray": "^0.0.6",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
