@@ -2,6 +2,39 @@
 [v-cloak] {
   display: none;
 }
+.badge {
+  display: inline-block;
+  padding: 1px 5px;
+  vertical-align: top;
+  font-size: 12px;
+  background-color: #d6bfb3;
+  color: #1d1b1b;
+  border-radius: 5px;
+}
+.ink-scroll-container {
+  height: 100% !important;
+  box-sizing: border-box;
+  cursor: default;
+}
+.ink-scroll-container li {
+  padding-left: 15px;
+  border-top: #bea6a6 solid 1px;
+  border-bottom: #bea6a6 solid 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.ink-scroll-container .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ink-scroll-container .right {
+  float: right;
+  margin-right: 15px;
+}
+.ink-scroll-container .right .time {
+  margin-right: 10px;
+}
 body {
   overflow: hidden;
 }

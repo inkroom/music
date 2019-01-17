@@ -65,7 +65,11 @@
         // 可能出现的版权限制等情况
 
         //等等情况
-        player.$layer.msg('');
+        // player.$layer.msg('');
+        console.log('audio error')
+        console.log(player.music)
+        player.music.playable = false;
+        control.updateMusic(player.music);
         control.next(player.random);
     }
 
@@ -89,16 +93,16 @@
 
     function clearDrag() { //清除拖拽
         if (audio.duration >= 0 && player.draging) {
-            console.log('up seek')
             player.seek(player.music.rate);
             player.draging = false;
             player.draging = null;
             document.onmousemove = function () {}
         }
     }
-    document.onmouseup = function () {
-        clearDrag();
-    }
+    document.addEventListener('mouseup',clearDrag)
+    // document.onmouseup = function () {
+    //     clearDrag();
+    // }
 
     window.player = new Vue({
         el: '#player',
@@ -136,6 +140,8 @@
             this.$watch('music', function (nv, ov) {
                 if (nv.url === '') { //可能是没有版权等原因
                     if (_this.random) {
+                        _this.music.playable = false;
+                        control.updateMusic(_this.music);
                         control.next(_this.random);
                         return;
                     }
@@ -168,7 +174,6 @@
         },
         methods: {
             play() {
-                console.log('出发ｐｌａｙ事件')
                 //开始播放
                 if (audio.duration > 0) {
                     if (audio.currentTime == audio.duration) { //已经播放完成

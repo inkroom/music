@@ -40,6 +40,7 @@
                             } else {
                                 for (var i = 0; i < musics.length; i++) {
                                     musics[i].origin = _this.origin;
+                                    musics[i].playable = true;
                                     for (var j = 0; j < _this.origins.length; j++) {
                                         if (_this.origins[j].key == musics[i].origin) {
                                             musics[i].originName = _this.origins[j].value;
@@ -74,6 +75,7 @@
                             if (n_music == null) { //请求错误
 
                             } else {
+                                n_music.playable = true;
                                 _this.result[index] = n_music
                                 control.play(n_music);
                             }

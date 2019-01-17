@@ -10,11 +10,24 @@
 
 // 播放器高度
 @head-height:100px;
- 
+//  徽章
+@badge-bg-color:#d6bfb3;
+@badge-color:#1d1b1b;
+
 [v-cloak]{
     display: none;
 }
- 
+//  徽章
+.badge{
+    display: inline-block;
+    padding:1px 5px;
+    vertical-align: top;
+    font-size: 12px;
+    background-color: @badge-bg-color;
+    color: @badge-color;
+    border-radius: 5px;
+}
+
 //歌曲列表，左侧歌曲名，右侧操作之类的东西
 .ink-scroll-container  {
     box-sizing: border-box;

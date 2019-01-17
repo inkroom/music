@@ -64,7 +64,11 @@
                 <option :value="item.key" v-for="item in origins" v-text="item.value"></option>
             </select>
         </div>
-        <div><span>歌曲列表</span> <span><a href="javascript:void(0)" @click='imported = !imported'>导入歌曲</a></span></div>
+        <div>
+            <span>歌曲列表</span> 
+            <span>共 {{ musics.length }} 首，其中{{playableCount}}首可以播放</span>
+            <span><a href="javascript:void(0)" @click='imported = !imported'>导入歌曲</a></span>
+        </div>
 
         <ink-scroll ink_height="100%">
             <slot>
@@ -75,7 +79,7 @@
                             <span class="origin" v-text="item.originName"></span>
                             <span><i class="fa fa-trash-o" @click="rm(i)"></i></span>
                         </span>
-                        <div class="name"> <i class="fa fa-hand-o-right" v-if="index == i"></i> <a href="javascript:void(0);" @click="play(i)" v-text="item.name + ' - ' + item.author"></a></div>
+                        <div class="name"> <i class="fa fa-hand-o-right" v-if="index == i"></i> <span class="badge" v-if=" !item.playable">error</span> <a href="javascript:void(0);" @click="play(i)" v-text="item.name + ' - ' + item.author"></a></div>
                     </li>
                 </ul>
 
@@ -112,7 +116,7 @@
 
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../lib/vue/vue.dev.js"></script>
     <script src="../lib/scroll/ink-scroll.js"></script>
 
     <script src="../js/common.js"></script>

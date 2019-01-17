@@ -11,7 +11,10 @@ function getQueryString(url, name) {
     if (r != null) return unescape(r[2]);
     return null;
 }
-
+function escape2Html(str) {
+    var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+    return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+   }
 let ku = {
     search(name, page, callback) {
         axios.get('https://songsearch.kugou.com/song_search_v2?pagesize=15&keyword=' + name + '&page=' + page)
@@ -22,7 +25,7 @@ let ku = {
                     let musics = [];
                     for (var i = 0; i < res.data.lists.length; i++) {
                         let music = {
-                            name: res.data.lists[i].SongName,
+                            name: escape2Html(res.data.lists[i].SongName) ,
                             hash: res.data.lists[i].FileHash,
                             time: transTime(res.data.lists[i].Duration),
                             author:res.data.lists[i].SingerName,
@@ -53,7 +56,7 @@ let ku = {
             })
             .then(function (res) {
                 res = res.data;
-                if (res.status != 1 || res.error_code != 0) {
+                if (res.status != 1 || res.err_code != 0) {
                     callback(null);
                 }
                 music.cover = res.data.img;
@@ -69,13 +72,18 @@ let ku = {
 
         axios.get(url).then(function (res) {
 
+            let token = getQueryString(res.request.responseURL, 'token');
+            if(token==null){
+                callback(null);
+                return;
+            }
             console.log(res);
             //获取url
             let redirectUrl = 'https://wwwapi.kugou.com/share/zlist.html?listid=' +
                 getQueryString(res.request.responseURL, 'listid') + '&type=' +
                 getQueryString(res.request.responseURL, 'type') + '&uid=' + getQueryString(res.request.responseURL, 'uid') +
                 '&sign=' + getQueryString(res.request.responseURL, 'sign') + '&_t=' + getQueryString(res.request.responseURL, '_t') +
-                '&token=' + getQueryString(res.request.responseURL, 'token');
+                '&token=' +token;
 
             // alert(redirectUrl);
             console.log(redirectUrl);
@@ -98,7 +106,7 @@ let ku = {
                                     let music = {
                                         hash: json[j].hash,
                                         total: transTime(json[j].timelength),
-                                        name: json[j].song_name.replace('&lt;','<').replace('&gt;','>'),
+                                        name: escape2Html(json[j].song_name),
                                         author:json[j].author_name
                                     };
 

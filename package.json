@@ -4,11 +4,12 @@
   "description": "跨平台，多来源音乐播放器",
   "main": "src/index.js",
   "scripts": {
-    "test": "test",
     "dev": "electron . dev",
     "proc": "node node_modules/less/bin/lessc ./src/css/*.less && electron .",
     "dev-server": "node ./src/dev.js",
-    "http-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1"
+    "http-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1",
+    "web-pack": "cross-env NODE_ENV=development webpack-dev-server",
+    "test":"webpack --mode development"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,16 @@
   },
   "homepage": "https://github.com/inkroom/music#readme",
   "devDependencies": {
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.0",
     "electron": "^4.0.1",
     "http-server": "^0.11.1",
-    "less": "^3.9.0"
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
     "asynckit": "^0.4.0",
