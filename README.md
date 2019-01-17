@@ -15,6 +15,11 @@
 就这样
 
 
+### 依赖
+
+- [vue](https://github.com/vuejs/vue)
+- vue滚动条插件：[ink-vue-scroll](https://github.com/inkroom/ink-vue-scroll)
+
 ### 构建步骤
 
 建议使用vscode，并且安装less easy插件，自动编译less文件
@@ -52,12 +57,18 @@
 - [ ] 音量调节
 - [ ] 播放模式 - 是否开启随机播放
 - [ ] 是否自动下一曲
-- [ ] 优化滚动条UI
+- [x] 优化滚动条UI
 - [ ] 歌词（待定）
+- [ ] 更友好的黑色主题(这个实在不擅长啊)
+- [ ] toast & loading
 
 
 
 ### change log
+
+#### 2018-1-17
+
+- 修改滚动条UI，主要是在改我的另一个项目-[ink-vue-scroll](https://github.com/inkroom/ink-vue-scroll)
 
 #### 2018-1-14
 
