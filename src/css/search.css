@@ -41,14 +41,18 @@ body {
 #search {
   position: absolute;
   display: none;
-  height: 70%;
+  height: 50%;
   width: 100%;
   bottom: -1px;
   left: 0;
+  z-index: 102;
 }
 #search > div {
   background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
   height: 100%;
+}
+#search > div .ink-scroll-container {
+  padding-bottom: 10px;
 }
 #search .fa-window-close {
   position: absolute;

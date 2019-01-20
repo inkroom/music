@@ -1,37 +1,62 @@
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-[v-cloak] {
-  display: none;
-}
-.badge {
-  display: inline-block;
-  padding: 1px 5px;
-  vertical-align: top;
-  font-size: 12px;
-  background-color: #d6bfb3;
-  color: #1d1b1b;
-  border-radius: 5px;
-}
-.ink-scroll-container {
-  height: 100% !important;
-  box-sizing: border-box;
-  cursor: default;
-}
-.ink-scroll-container li {
-  padding-left: 15px;
-  border-top: #bea6a6 solid 1px;
-  border-bottom: #bea6a6 solid 1px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.ink-scroll-container .name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.ink-scroll-container .right {
-  float: right;
-  margin-right: 15px;
-}
-.ink-scroll-container .right .time {
-  margin-right: 10px;
-}
+@import "common.less";
+
+
+@import-height:50px;
+@import-bg-color:rgb(83, 71, 71);
+
+@title-height:30px;
+@title-border-size:2px;
+@title-border-color:rgb(116, 61, 61);
+
+@high-light-color:#7ed23e;
+
+.content {
+
+    padding-top: @head-height;
+    padding-bottom: @title-height;
+    height: 100%;
+    // overflow: hidden;
+    box-sizing: border-box;
+    a {
+        text-decoration: none;
+    }
+     
+    a:hover{
+        text-decoration: underline;
+    }
+    >div{
+      height: @title-height;
+      padding-left: @margin-border;
+
+      border-bottom: @title-border-color solid @title-border-size; 
+    }
+    ul {
+      padding-bottom:  @margin-border;
+    }
+
+    .fa-hand-o-right {
+      color: @high-light-color;
+    }
+
+    .import_form {
+      position: absolute;
+      left: 30%;
+      top: 20%;
+
+      height: @import-height;
+
+      padding:@margin-border;
+
+      text-align: center;
+      vertical-align: middle;
+
+      background-color: @import-bg-color;
+      * {
+        height: @import-height - 10;
+      }
+      input[type=text]{
+        width: 300px;
+      }
+    }
+
+  }

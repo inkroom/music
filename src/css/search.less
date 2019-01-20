@@ -8,14 +8,17 @@ body{
 #search {
     position: absolute;
     display: none;  
-    height: 70%;
+    height: 50%;
     width: 100%;
     bottom: -1px;//底部出现音乐列表部分的滚动条
     left: 0;
- 
+    z-index: 102;
     >div{
         background: @search-bg-color;  
         height: 100%;
+        .ink-scroll-container{
+            padding-bottom: 10px;
+        }
     }
     .fa-window-close {
         position: absolute;

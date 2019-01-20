@@ -46,11 +46,14 @@
     //用这两个事件来修改状态，避免audio延迟导致的状态错误
     audio.onplay = function () {
         player.playing = true;
+        player.music.playable = true;
         duration = audio.duration;
         player.music.total = transTime(duration);
+        control.updateMusic(player.music);
         // interval_index = setInterval(listener_rate,200);
     }
     audio.onpause = function () {
+        player.music.playable = true;
         player.playing = false;
     }
     audio.onended = function () {
@@ -63,7 +66,7 @@
 
     audio.onerror = function () {
         // 可能出现的版权限制等情况
-
+        player.$layer.msg('由于版权等原因，该歌曲不能播放')
         //等等情况
         // player.$layer.msg('');
         console.log('audio error')
@@ -121,9 +124,9 @@
         },
         created() {
             let _this = this;
-            fse.ensureDirSync('../config');
-            fse.ensureFileSync('../config/play.bat');
-            fse.readJSON('../config/play.bat', function (err, value) {
+            fse.ensureDirSync('./config');
+            fse.ensureFileSync('./config/play.bat');
+            fse.readJSON('./config/play.bat', function (err, value) {
                 if (err) throw err;
                 console.log(value)
                 for (const key in value) {
@@ -156,19 +159,19 @@
                 _this.play();
 
                 console.log(_this._data);
-                fse.writeJSON('../config/play.bat', _this._data);
+                fse.writeJSON('./config/play.bat', _this._data);
             })
             this.$watch('playing', function (nv, ov) {
 
                 console.log("播放状态," + ov + "->" + nv)
 
-                fse.writeJSON('../config/play.bat', _this._data);
+                fse.writeJSON('./config/play.bat', _this._data);
             })
             this.$watch('vol', function (nv, ov) {
-                fse.writeJSON('../config/play.bat', _this._data);
+                fse.writeJSON('./config/play.bat', _this._data);
             })
             this.$watch('random', function (nv, ov) {
-                fse.writeJSON('../config/play.bat', _this._data);
+                fse.writeJSON('./config/play.bat', _this._data);
             })
 
         },

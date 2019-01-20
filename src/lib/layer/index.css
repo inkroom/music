@@ -1,0 +1,19 @@
+.ink-msg-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  .ink-msg-container {
+      position: absolute;
+    margin-top: 10%;
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: bisque;
+    border-radius: 5px;
+    border: chocolate solid 2px;
+    /* border-rea */
+   
+  }

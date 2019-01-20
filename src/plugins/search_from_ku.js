@@ -27,7 +27,7 @@ let ku = {
                         let music = {
                             name: escape2Html(res.data.lists[i].SongName) ,
                             hash: res.data.lists[i].FileHash,
-                            time: transTime(res.data.lists[i].Duration),
+                            total: transTime(res.data.lists[i].Duration),
                             author:res.data.lists[i].SingerName,
                         };
                         musics.push(music);

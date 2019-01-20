@@ -24,31 +24,32 @@
                 if (data.code == 200) {
 
                     let musics = [];
-                    for (var i = 0; i < data.result.songs.length; i++) {
-
-                        let music = {
-                            name: data.result.songs[i].name,
-                            time: transTime(data.result.songs[i].duration / 1000),
-                            id: data.result.songs[i].id,
-                            author: data.result.songs[i].artists[0].name,
-                            // br: data.result.songs[i].m.br
+                    if (typeof data.result.songs != 'undefined') {
+                        for (var i = 0; i < data.result.songs.length; i++) {
+                            let music = {
+                                name: data.result.songs[i].name,
+                                total: transTime(data.result.songs[i].duration / 1000),
+                                id: data.result.songs[i].id,
+                                author: data.result.songs[i].artists[0].name,
+                                // br: data.result.songs[i].m.br
+                            }
+                            if (data.result.songs[i].m) {
+                                music.br = data.result.songs[i].m.br;
+                            }
+                            if (data.result.songs[i].album) {
+                                music.album = data.result.songs[i].album.id;
+                            }
+                            musics.push(music);
                         }
-                        if (data.result.songs[i].m) {
-                            music.br = data.result.songs[i].m.br;
-                        }
-                        if (data.result.songs[i].album) {
-                            music.album = data.result.songs[i].album.id;
-                        }
-
-                        musics.push(music);
-
+                        callback(musics);
+                    } else {
+                        callback(null);
                     }
-                    callback(musics);
+
                 } else {
                     callback(null);
                 }
             })
-            callback(null);
         },
         equals(music1, music2) {
             return music1.id == music2.id;
@@ -102,7 +103,6 @@
                 console.log(error);
                 callback(null);
             })
-            callback(null);
         }
     }
     control.install('163', '网易云', wang);

@@ -20,7 +20,7 @@
 
     function writeJSON() {
         // let temp = {index:vue.index,musics:vue.musics}
-        fse.writeJSON('../config/list.bat', {
+        fse.writeJSON('./config/list.bat', {
             index: vue.index,
             musics: vue.musics
         });
@@ -41,10 +41,10 @@
         created() {
             //读取数据
             let _this = this;
-            console.log(path.resolve('../config'))
-            fse.ensureDirSync('../config');
-            fse.ensureFile('../config/list.bat').then(function () {
-                fse.readJSON('../config/list.bat', function (err, value) {
+            console.log(path.resolve('./config'))
+            fse.ensureDirSync('./config');
+            fse.ensureFile('./config/list.bat').then(function () {
+                fse.readJSON('./config/list.bat', function (err, value) {
                     if (err) throw err;
                     if (value) {
                         _this.index = value.index || -1;
@@ -98,6 +98,8 @@
                 }
             },
             rm(index) {
+                if(this.index == index)
+                    this.index = -1;
                 this.musics.splice(index, 1);
             },
             import_music() {
@@ -158,8 +160,9 @@
                 vue.index = index;
                 music = vue.musics[index];
             } else {
-                index = (index + 1) % vue.musics.length;
+                let index = (vue.index + 1) % vue.musics.length;
                 music = vue.musics[index];
+                vue.index = index;
             }
             if (music && music.url) return music;
             beans[music.origin].index(music, function (n_music) {
@@ -175,7 +178,7 @@
         add(music) {
             let exists = false;
             for (var i = 0; i < vue.musics.length; i++) { //避免重复添加
-                if (musics[i].origin == music.origin && beans[music.origin].equals(music, musics[i])) {
+                if (vue.musics[i].origin == music.origin && beans[music.origin].equals(music, vue.musics[i])) {
                     // vue.musics.push(music);
                     exists = true;
                 }
@@ -184,7 +187,8 @@
                 if (!music.playable) {
                     music.playable = true;
                 }
-                vue.musics.push(music);
+                vue.musics.unshift(music);
+                if (vue.index != -1) vue.index += 1;
             }
         },
         install(key, value, bean) {

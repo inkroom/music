@@ -19,6 +19,7 @@
 
 - [vue](https://github.com/vuejs/vue)
 - vue滚动条插件：[ink-vue-scroll](https://github.com/inkroom/ink-vue-scroll)
+- vue弹出层插件:[ink-layer](https://github.com/inkroom/vue-layer)
 
 ### 构建步骤
 
@@ -62,13 +63,21 @@
 - [x] 优化滚动条UI
 - [ ] 歌词（待定）
 - [ ] 更友好的黑色主题(这个实在不擅长啊)
-- [ ] toast & loading
+- [x] toast & loading
 - [x] 在歌曲列表中高亮当前播放歌曲
 - [ ] 搜索列表分页
 - [x] 对于版权受限歌曲添加徽章提示
 
 
 ### change log
+
+#### 2018-1-19
+
+- 完成toast & loading
+- 修改歌曲添加为头部添加
+- 添加列表高亮
+- 修正部分情况下歌曲列表指向错误
+- 添加配置文件，我自己的歌单，部分歌曲暂不可播放
 
 #### 2018-1-17
 
