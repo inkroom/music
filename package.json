@@ -9,7 +9,7 @@
     "dev-server": "node ./src/dev.js",
     "http-server": "node node_modules/http-server/bin/http-server -p 8001 -c-1",
     "web-pack": "cross-env NODE_ENV=development webpack-dev-server",
-    "pack-linux": "electron-packager ./ music --linux --all --out ./out --overwrite --asar"
+    "pack": "electron-packager . music --win --out ../out --all --app-version=0.0.1 --overwrite --asar"
   },
   "repository": {
     "type": "git",

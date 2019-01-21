@@ -32,11 +32,11 @@
                     </li><li>
                         <i class="fa fa-forward" @click="next"></i>
                     </li><li>
-                        <i class="fa fa-random"></i>
+                        <i class="fa fa-random" :style="{color:random?'':'gray'}" @click="random = !random"></i>
                     </li><li>
                         <i class="fa fa-volume-up"></i>
                     </li><li>
-                        <i class="fa fa-list"></i>
+                        <i class="fa fa-list" @click="this.$layer.msg('暂未开放')"></i>
                     </li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
             </select>
         </div>
         <div>
-            <span>歌曲列表</span> 
+            <span>歌曲列表</span>
             <span>共 {{ musics.length }} 首，其中{{playableCount}}首可以播放</span>
             <span><a href="javascript:void(0)" @click='imported = !imported'>导入歌曲</a></span>
         </div>
@@ -76,7 +76,13 @@
                             <span class="origin" v-text="item.originName"></span>
                             <span><i class="fa fa-trash-o" @click="rm(i)"></i></span>
                         </span>
-                        <div class="name"> <i class="fa fa-hand-o-right" v-if="index == i"></i> <span class="badge" v-if=" !item.playable">error</span> <a href="javascript:void(0);" @click="play(i)" v-text="item.name + ' - ' + item.author"></a></div>
+                        <div class="name">
+                            <i class="fa fa-hand-o-right" v-if="index == i"></i>
+                            <span class="badge" v-if=" !item.playable">error</span>
+                            <a href="javascript:void(0);" @click="play(i)"
+                                v-text="item.name + ' - ' + item.author"></a>
+                            <i class="fa fa-search" title="搜索歌曲" @click="search(i)"></i>
+                            </div>
                     </li>
                 </ul>
 
@@ -88,28 +94,34 @@
         <div>
             <i class="fa fa-window-close" @click="show = false"></i>
             <div class="form">
-                <input type="text" v-model="name" placeholder="歌曲名称" @keyup.enter="search">
-                <select v-model="origin" @change="search">
+                <input type="text" v-model="name" placeholder="歌曲名称" @keyup.enter="search(1)">
+                <select v-model="origin" @change="search(1)">
                     <option :value="item.key" v-for="item in origins" v-text="item.value"></option>
                 </select>
+                <span class="pages" v-if="page.now != -1">
+                    <button v-if="page.now != 1" @click="search(page.now - 1)">上一页</button>
+                    <button v-if="page.now != page.count" @click="search(page.now + 1)">下一页</button>
+                    <span>{{page.count == 0?0:page.now}} &nbsp;/&nbsp; {{page.count}}</span>
+                </span>
             </div>
             <div>
                 <!-- <div class="result "> -->
-                    <ink-scroll ink_height="100%" :scroll="scroll">
-                        <ul>
-                            <li v-for="(item , index) in result">
-                                <span class="right">
-                                    <span class="time" v-text="item.total + ' ('+item.originName+')'"></span>
-                                    <i class="fa fa-play" @click="play(index)"></i>
-                                    <i class="fa fa-plus" @click="add(index)"></i>
-                                </span>
-                                <div class="name" v-text="item.name + ' - ' + item.author">歌曲名称</div>
-                            </li>
-                        </ul>
-                    </ink-scroll>
+                <ink-scroll :scroll="scroll">
+                    <ul>
+                        <li v-for="(item , index) in result">
+                            <span class="right">
+                                <span class="time" v-text="item.total + ' ('+item.originName+')'"></span>
+                                <i class="fa fa-play" @click="play(index)"></i>
+                                <i class="fa fa-plus" @click="add(index)"></i>
+                            </span>
+                            <div class="name" v-text="item.name + ' - ' + item.author">歌曲名称</div>
+                        </li>
+                    </ul>
+                </ink-scroll>
 
                 <!-- </div> -->
             </div>
+
 
         </div>
     </div>
@@ -122,7 +134,7 @@
     <script src="../js/list.js"></script>
     <script src="../js/search.js"></script>
 
-    
+
     <!-- <script src="../lib/scroll/js/scrollbot.min.js"></script> -->
     <!-- <script src="../lib//Optiscroll-3.2.0/dist/optiscroll.min.js"></script> -->
     <!-- <script src="https://unpkg.com/vue-happy-scroll/docs/happy-scroll.min.js"></script> -->
@@ -147,6 +159,11 @@
                 if (toogle) search.show = !search.show;
                 else search.show = true;
             },
+            search(name) {
+                this.showSearch(false);
+                search.name = name;
+                search.search();
+            },
             play(music) {
                 player.music = music;
             },
@@ -154,10 +171,12 @@
                 list.add(music);
             },
             install(key, value, bean) {
+                console.log('注册')
+                console.log(bean);
                 search.install(key, value, bean);
                 list.install(key, value, bean);
             },
-            updateMusic(music){//诸如其他组件对music的操作需要同步到list中，调用该方法
+            updateMusic(music) { //诸如其他组件对music的操作需要同步到list中，调用该方法
                 list.update(music);
             }
         };

@@ -54,13 +54,23 @@
             })
 
         },
-        mounted() {
-            this.$watch('musics', function (nv, ov) {
+        watch: {
+            musics(nv,ov){
                 writeJSON();
-            });
-            this.$watch('index', function () {
-                writeJSON()
-            });
+            },
+            index(nv,ov){
+                writeJSON();
+            },
+            imported(nv,ov){
+                if(nv){
+                    let _this = this;
+                    setTimeout(function(){
+                        _this.$el.getElementsByTagName('input')[0].focus()
+                    },50)
+                }
+            }
+        },
+        mounted() {
         },
         computed: {
             playableCount() {
@@ -78,6 +88,9 @@
             },
             next() {
 
+            },
+            search(index){
+                control.search(this.musics[index].name +'- '+this.musics[index].author);
             },
             play(index) {
 

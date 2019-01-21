@@ -25,10 +25,15 @@
         text-decoration: underline;
     }
     >div{
+      // padding-right: @margin-border;
       height: @title-height;
       padding-left: @margin-border;
 
       border-bottom: @title-border-color solid @title-border-size; 
+
+      .ink-scroll-content{
+        padding-right: @margin-border;
+      }
     }
     ul {
       padding-bottom:  @margin-border;
@@ -45,6 +50,7 @@
 
       height: @import-height;
 
+      z-index: 9999;
       padding:@margin-border;
 
       text-align: center;

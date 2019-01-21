@@ -1,6 +1,4 @@
-
 @import 'common.less';
-
 
 body{
     overflow: hidden;
@@ -13,6 +11,11 @@ body{
     bottom: -1px;//底部出现音乐列表部分的滚动条
     left: 0;
     z-index: 102;
+
+    input[type=text]{
+        width: 300px;
+    }
+
     >div{
         background: @search-bg-color;  
         height: 100%;
@@ -50,37 +53,19 @@ body{
         padding-top:@form-height+15px;
         box-sizing: border-box;
     }
-    .result{
-        // box-sizing: border-box;
-        // height: 100%;
-        // // padding-top:@form-height + 15;
-        // overflow-y:scroll;      
-        // // margin-top: 15px;
-        // cursor: default;
-        // li{
-        //     padding-left: @margin-border;
-        //     border-top:rgb(190, 166, 166) solid 1px;
-        //     border-bottom:rgb(190, 166, 166) solid 1px;
-        //     padding-top:5px;
-        //     padding-bottom: 5px;
-        // }
-        // .name {
-        //     overflow: hidden;
-        //     text-overflow:ellipsis;
-        //     white-space: nowrap;
-        // }
-        
-        // .right{
-        //     float: right;
-        //     margin-right: @margin-border;
-
-          
-        //     .time{
-        //         margin-right: @margin-border - 5;
-        //     }
-        // }
-        
-
+    .pages{
+        text-align: center;
+        button{
+            background-color: darkred;
+            color:white;
+            border:none;
+            border-radius: 5px;
+            display: inline-block;
+            height: @form-height;
+            line-height: @form-height;
+            padding:0 8px;
+            vertical-align: middle;
+        }
     }
 }
 

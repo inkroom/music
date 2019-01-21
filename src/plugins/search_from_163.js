@@ -6,16 +6,17 @@
     const wangRequest = require('./163/163_request');
 
     let wang = {
-        search(title, page, callback) {
+        search(name, page, callback) {
 
-            const data = {
-                s: title,
+
+            let params = {
+                s: name,
                 type: 1, // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
                 limit: 15,
                 offset: page
             }
             let res = wangRequest(
-                'POST', `https://music.163.com/weapi/search/get`, data, {
+                'POST', `https://music.163.com/weapi/search/get`, params, {
                     crypto: 'weapi'
                 }
             ).then(function (data) {
@@ -25,6 +26,12 @@
 
                     let musics = [];
                     if (typeof data.result.songs != 'undefined') {
+                        console.log(data.result.songCount)
+                        let result = {
+                            // pageCount = parseInt(data.result.songCount / 15),
+                            musics:[]
+                        }
+                        result.pageCount = Math.ceil(data.result.songCount  / 15);
                         for (var i = 0; i < data.result.songs.length; i++) {
                             let music = {
                                 name: data.result.songs[i].name,
@@ -39,9 +46,9 @@
                             if (data.result.songs[i].album) {
                                 music.album = data.result.songs[i].album.id;
                             }
-                            musics.push(music);
+                            result.musics.push(music);
                         }
-                        callback(musics);
+                        callback(result);
                     } else {
                         callback(null);
                     }
@@ -105,5 +112,6 @@
             })
         }
     }
+    console.log('注册')
     control.install('163', '网易云', wang);
 })();

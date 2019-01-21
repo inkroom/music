@@ -1,4 +1,3 @@
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 [v-cloak] {
   display: none;
 }
@@ -12,7 +11,6 @@
   border-radius: 5px;
 }
 .ink-scroll-container {
-  height: 100% !important;
   box-sizing: border-box;
   cursor: default;
 }
@@ -22,6 +20,9 @@
   border-bottom: #bea6a6 solid 1px;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+.ink-scroll-container li:hover {
+  background-color: #0f4877;
 }
 .ink-scroll-container .name {
   overflow: hidden;
@@ -47,8 +48,11 @@ body {
   left: 0;
   z-index: 102;
 }
+#search input[type=text] {
+  width: 300px;
+}
 #search > div {
-  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(to right, #485563, #29323c);
   height: 100%;
 }
 #search > div .ink-scroll-container {
@@ -83,4 +87,18 @@ body {
   height: 100%;
   padding-top: 45px;
   box-sizing: border-box;
+}
+#search .pages {
+  text-align: center;
+}
+#search .pages button {
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 8px;
+  vertical-align: middle;
 }

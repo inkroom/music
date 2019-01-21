@@ -14,32 +14,47 @@
             bean: {
 
             },
+            page: {
+                now: -1,
+                count: -1
+            },
             scroll: 1
         },
-        mounted() {
-            let _this = this;
-            this.$watch('show', function (nv, ov) {
+        watch: {
+            show(nv, ov) {
                 if (nv) {
-
-                    _this.scroll += 1;
+                    this.scroll += 1;
+                    let _this = this;
+                    setTimeout(function () {
+                        _this.$el.getElementsByTagName('input')[0].focus();
+                    }, 50)
                 }
-            })
+            }
+        },
+        mounted() {
+            // let _this = this;
+            // this.$watch('show', function (nv, ov) {
+
+            // })
 
         },
         methods: {
             // show() { }
-            search() {
+            search(now) {
                 if (this.name !== '' && this.origin != '') {
                     let bean = this.bean[this.origin];
                     if (bean) {
                         let _this = this;
                         _this.$layer.loading();
-                        bean.search(this.name, 1, function (musics) {
-                            console.log(musics);
+                        now = now || 1;
+                        bean.search(this.name, now, function (result) {
+
+                            console.log(result);
                             _this.$layer.close();
-                            if (musics == null) { //请求错误
+                            if (result == null) { //请求错误
                                 _this.$layer.msg('请求错误');
                             } else {
+                                let musics = result.musics;
                                 for (var i = 0; i < musics.length; i++) {
                                     musics[i].origin = _this.origin;
                                     musics[i].playable = true;
@@ -50,6 +65,8 @@
                                         }
                                     }
                                 }
+                                _this.page.count = result.pageCount;
+                                _this.page.now = now;
                                 _this.result = musics
                             }
                         });

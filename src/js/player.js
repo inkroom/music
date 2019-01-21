@@ -59,9 +59,9 @@
     audio.onended = function () {
         player.playing = false;
 
-        if (player.random) {
+        // if (player.random) {
             control.next(player.random);
-        }
+        // }
     }
 
     audio.onerror = function () {

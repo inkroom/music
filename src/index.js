@@ -24,13 +24,14 @@ function createWindow() {
                 width:800,
                 height:600,
                 show:false,
-                icon:'src/img/logo.jpg'
+                icon:'src/img/logo.jpg',
+                minWidth:400,
+                minHeight:600,
             })
             win.on('close',function(){win = null}).once('ready-to-show',function(){
                 win.show();
             })
             .loadFile('src/html/index.html');
-            console.log(win)
         }
     }
 }
