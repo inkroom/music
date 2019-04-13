@@ -24,9 +24,11 @@
 .icon-next:before {
   content: "\e611";
 }
+
 .icon-random:before {
   content: "\e7b8";
 }
+
 .icon-volume:before {
   content: "\e649";
 }
@@ -41,4 +43,22 @@
 
 .icon-location-searching:before {
   content: "\e68d";
+}
+
+
+.icon-download:before {
+  content: "\e638";
+}
+
+
+.icon-import:before {
+  content: "\e628";
+}
+
+.icon-search:before {
+  content: "\e621";
+}
+
+.icon-plus:before {
+  content: "\e620";
 }

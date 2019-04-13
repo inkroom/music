@@ -5,7 +5,7 @@
     </div>
     <div class="main">
       <!-- <el-scrollbar style="height:100%"> -->
-        <list></list>
+        <musics></musics>
       <!-- </el-scrollbar> -->
     </div>
   </div>
@@ -21,9 +21,9 @@
 </template>
 <script>
 import Player from "./player";
-import List from "./list";
+import Musics from "./musics";
 export default {
-  components: { Player, List },
+  components: { Player, Musics },
   data() {
     return {
       process: 39

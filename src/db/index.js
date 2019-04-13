@@ -17,49 +17,49 @@ if (process.type !== 'renderer') {
 const adapter = new FileSync(path.join(STORE_PATH, '/k-music.json'))
 
 const db = Datastore(adapter)
-db._.mixin(LodashId)
+// db._.mixin(LodashId)
 
-db._.mixin({
-    // insert: function (collection, doc) {
+// db._.mixin({
+//     // insert: function (collection, doc) {
 
-    //     console.log('insert')
-    //     console.log(collection)
-    //     console.log(doc);
-    //     return doc
-    // },
-    // updateWhere: function (collection, predicate, attrs) {
-    //     var self = this
-    //     var docs = this.filter(collection, predicate)
+//     //     console.log('insert')
+//     //     console.log(collection)
+//     //     console.log(doc);
+//     //     return doc
+//     // },
+//     // updateWhere: function (collection, predicate, attrs) {
+//     //     var self = this
+//     //     var docs = this.filter(collection, predicate)
 
-    //     docs.forEach(function (doc) {
-    //         self.assign(doc, attrs, { id: doc.id })
-    //     })
+//     //     docs.forEach(function (doc) {
+//     //         self.assign(doc, attrs, { id: doc.id })
+//     //     })
 
-    //     return docs
-    // },
-    get: function (collection) {
-        console.log(collection.musics);
-        collection.musics.forEach(element => {
-            for (const key in element) {
-                if (element.hasOwnProperty(key)) {
-                    const value = element[key];
-                    if (typeof value == 'string') {
-                        element[key] = value.replace(/[<>"&]/g, function (match, pos, originalText) {
-                            switch (match) {
-                                case "<": return "&lt;";
-                                case ">": return "&gt;";
-                                case "&": return "&amp;";
-                                case "\"": return "&quot;";
-                            }
-                        });
-                    }
-                }
-            }
+//     //     return docs
+//     // },
+//     get: function (collection) {
+//         console.log(collection.musics);
+//         collection.musics.forEach(element => {
+//             for (const key in element) {
+//                 if (element.hasOwnProperty(key)) {
+//                     const value = element[key];
+//                     if (typeof value == 'string') {
+//                         element[key] = value.replace(/[<>"&]/g, function (match, pos, originalText) {
+//                             switch (match) {
+//                                 case "<": return "&lt;";
+//                                 case ">": return "&gt;";
+//                                 case "&": return "&amp;";
+//                                 case "\"": return "&quot;";
+//                             }
+//                         });
+//                     }
+//                 }
+//             }
 
-        });
-        return collection;
-    }
-})
+//         });
+//         return collection;
+//     }
+// })
 
 // if (!db.has('uploaded').value()) {
 //   db.set('uploaded', []).write()

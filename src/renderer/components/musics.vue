@@ -1,14 +1,26 @@
 <template>
   <div style="height:100%" id="k-music-list-container">
-    <p style="padding:5px;">共 {{ musicsSize }} 首</p>
+    <p style="padding:5px;">
+      共 {{ musicsSize }} 首
+      <span style="float:right;margin-right:20px;">
+        <i class="iconfont icon-search" @click="dialog.search.visible=true"></i>
+        <i class="iconfont icon-download"></i>
+        <i class="iconfont icon-import" @click="dialog.import.visible=true"></i>
+      </span>
+    </p>
     <el-scrollbar style="height:100%;">
       <ul class="k-m-list" ref="list">
         <li v-for="(m,i) in musics" :key="i" class="text-ellipsis">
           {{ i+1 }} .
-          <span
+          <el-tag
+            closable
+            :disable-transitions="false"
+            @close="statusClear(i)"
             v-if="!m.status"
-            class="el-badge__content el-badge__content--undefined"
-          >error</span>
+            type="warning"
+            size="mini"
+          >error</el-tag>
+          <!-- <span v-if="!m.status" class="el-badge__content el-badge__content--undefined">error</span> -->
 
           <span style="float:right">
             <span>{{ m.originName }}</span>
@@ -28,20 +40,27 @@
         </li>
       </ul>
       <i class="iconfont icon-location-searching" @click="location"></i>
-      <import :show.sync="dialog.import.visible"></import>
     </el-scrollbar>
+    <search :show.sync="dialog.search.visible"></search>
+    <import :show.sync="dialog.import.visible"></import>
   </div>
 </template>
 <script>
 import origin from "../mixins/origin";
 import Import from "./import";
+import Search from "./search";
+
+import mixins from "@/mixins/list";
 
 export default {
   //   mixins: { origin },
-  components: { Import },
+  components: { Import, Search },
+  mixins: [mixins],
   computed: {
-    musics() {
-      return this.$store.state.List.list;
+    musics: {
+      get() {
+        return this.$store.state.List.list;
+      }
     },
     musicsSize() {
       return this.$store.state.List.list.length;
@@ -55,7 +74,8 @@ export default {
     console.log(this.$store.state);
     return {
       dialog: {
-        import: { visible: false }
+        import: { visible: false },
+        search: { visible: false }
       },
       mode: {
         random: true
@@ -109,29 +129,10 @@ export default {
           console.log("删除失败");
         });
     },
-    play(index) {
-      if (this.musics[index].url && this.musics[index].url != "") {
-        console.log(this.musics[index].url);
-        console.log("有url，直接播放");
-        this.index = index;
-        this.$eventHub.$emit("musicChange", this.musics[index]);
-      } else {
-        console.log("获取播放url");
-        this.$helper
-          .getMusic(Object.assign({}, this.musics[index]))
-          .then(music => {
-            if (music.url && music.url !== "") {
-              this.index = index;
-              this.$store.dispatch("updateMusic", { index, music });
-              this.$eventHub.$emit("musicChange", music);
-            } else {
-              let music = Object.assign({ status: false }, this.musics[index]);
-              music.status = false;
-              this.$store.dispatch("updateMusic", { index, music });
-              this.$message(`${music.name} 不能播放`);
-            }
-          });
-      }
+    statusClear(index) {
+      let music = Object.assign({}, this.musics[index]);
+      music.status = true;
+      this.$store.dispatch("updateMusic", { index, music });
     },
     location() {
       function getStyle(obj, attr) {
@@ -160,32 +161,32 @@ export default {
 </script>
 <style lang="scss">
 $name-height: 24px;
-
+.k-m-list {
+  padding-right: 15px;
+  padding-left: 15px;
+  // padding-bottom: 30px;
+  box-sizing: border-box;
+  ul,
+  li {
+    list-style-type: none;
+    margin: 10px 3px;
+  }
+  i {
+    cursor: pointer;
+  }
+  .icon-hand-pointing-right {
+    color: rgb(214, 203, 203);
+    font-size: 20px;
+  }
+  .name {
+    line-height: $name-height;
+    height: $name-height;
+  }
+}
 #k-music-list-container {
   padding-bottom: 30px;
   box-sizing: border-box;
-  .k-m-list {
-    padding-right: 15px;
-    padding-left: 15px;
-    // padding-bottom: 30px;
-    box-sizing: border-box;
-    ul,
-    li {
-      list-style-type: none;
-      margin: 10px 3px;
-    }
-    i {
-      cursor: pointer;
-    }
-    .icon-hand-pointing-right {
-      color: rgb(214, 203, 203);
-      font-size: 20px;
-    }
-    .name {
-      line-height: $name-height;
-      height: $name-height;
-    }
-  }
+
   .icon-location-searching {
     cursor: pointer;
 
@@ -194,11 +195,13 @@ $name-height: 24px;
     bottom: 30px;
     right: 50px;
   }
-}
-</style>
-
-<style lang="scss"  >
-.el-scrollbar__wrap {
-  overflow-x: hidden !important;
+  .el-scrollbar__wrap {
+    overflow-x: hidden !important;
+  }
+  .iconfont {
+    cursor: pointer;
+    margin-right: 15px;
+    font-size: 20px;
+  }
 }
 </style>

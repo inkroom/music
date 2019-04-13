@@ -24,7 +24,44 @@ export default class Ku {
     constructor() {
         this.originName = '酷狗';
     }
+    search(name, page,pageSize) {
 
+        return new Promise((resolve, reject) => {
+            // let pageSize = 15;
+
+            axios.get('https://songsearch.kugou.com/song_search_v2?pagesize=' + pageSize + '&keyword=' + name + '&page=' + page)
+                .then(function (res) {
+                    console.log(res);
+                    res = res.data;
+                    if (res.status == 1 && res.error_code == 0) {
+                        let result = {
+                            pageCount: Math.ceil(res.data.total / pageSize),
+                            musics: [],
+                            page: res.data.page,
+                            pageSize: res.data.pageSize,
+                            total: res.data.total
+                        }
+                        for (var i = 0; i < res.data.lists.length; i++) {
+                            let music = {
+                                name: escape2Html(res.data.lists[i].SongName),
+                                hash: res.data.lists[i].FileHash,
+                                // total: transTime(res.data.lists[i].Duration),
+                                time: res.data.lists[i].Duration,
+                                author: res.data.lists[i].SingerName,
+                            };
+                            result.musics.push(music);
+                        }
+                        resolve(result)
+                    } else {
+                        reject();
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                })
+        })
+
+    }
     getMusic(music) {
 
         return new Promise((resolve, reject) => {
@@ -54,6 +91,10 @@ export default class Ku {
 
     }
 
+    equals(target, source) {
+        return target.hash === source.hash;
+    }
+
     getMusics(url) {
         return new Promise((resolve, reject) => {
             axios.get(url).then(res => {
@@ -71,7 +112,6 @@ export default class Ku {
                     '&sign=' + getQueryString(res.request.responseURL, 'sign') + '&_t=' + getQueryString(res.request.responseURL, '_t') +
                     '&token=' + token;
 
-                // alert(redirectUrl);
                 console.log(redirectUrl);
 
                 axios.get(redirectUrl).then(function (res) {
