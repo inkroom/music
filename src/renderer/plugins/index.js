@@ -33,12 +33,12 @@ let helpers = {
         }
         return i === musics.length;
     },
-    equals(target, source) {
-        if (target.origin != source.origin) {
-            return true;
+    equals(target, source) {//此处判断很有问题
+        if (target.origin != source.origin) {//不是一个库的直接不等
+            return false;
         }
         let m = modules[target.origin];
-
+        return m.equals(target, source);
     },
     getOriginNames() {
         let names = [];

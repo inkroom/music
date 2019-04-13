@@ -64,8 +64,8 @@ export default class Wang {
 
         })
     }
-    equals(music1, music2) {
-        return music1.id == music2.id;
+    equals(target, source) {
+        return target.id == source.id;
     }
     getMusics(url) {
         let id = -1;

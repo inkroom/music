@@ -194,7 +194,7 @@ export default {
 </script>
 
 <style lang="scss">
-$cover-max-width: 60px;
+$cover-max-width: 80px;
 
 $time-width: 100px;
 
@@ -222,8 +222,10 @@ $name-height: 24px;
     overflow: hidden;
     max-width: $cover-max-width;
     vertical-align: middle;
+    text-align: center;
     > img {
-      width: $cover-max-width;
+      height: $cover-max-width;
+      // width: $cover-max-width;
     }
   }
   .controller {

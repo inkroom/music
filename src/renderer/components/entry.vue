@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position:relative;height:100%">
     <div class="header title two-col-container">
       <player></player>
     </div>
@@ -52,9 +52,9 @@ body {
 }
 
 .main {
-  position: fixed;
+  position: absolute;
   width: 100%;
-  top: 80px;
+  top: $title-height;
   bottom: 0;
   overflow: hidden;
 }

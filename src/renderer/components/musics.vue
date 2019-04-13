@@ -59,10 +59,13 @@ export default {
   computed: {
     musics: {
       get() {
-        return this.$store.state.List.list;
+        //将数组倒序输出，使后添加的在前方
+        return this.$store.state.List.list.slice().reverse();
+        // return this.$store.state.List.list;
       }
     },
     musicsSize() {
+      // return  this.$store.state.List.list.slice().reverse();
       return this.$store.state.List.list.length;
     },
     originNames() {
@@ -82,6 +85,11 @@ export default {
       },
       index: -1
     };
+  },
+  watch: {
+    index(nv, ov) {
+      console.log(`index nv=${nv} ov=${ov}`);
+    }
   },
   created() {
     this.$eventHub.$on("next", this.next);
@@ -110,10 +118,15 @@ export default {
           return;
         }
         let next = Math.floor(Math.random() * this.musics.length);
-        if (music !== this.musics[next]) {
+        console.log(`next = ${next}`);
+
+        if (!this.$helper.equals(music, this.musics[next])) {
           this.play(next);
           // this.$eventHub.$emit('musicChange',next);
         } else {
+          console.log(`递归 next = ${next}`);
+          console.log(music);
+          console.log(this.musics[next]);
           //重复则递归生成，歌曲数量够的话是不会递归过深的
           this.next(music);
         }
