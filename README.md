@@ -2,6 +2,8 @@
 
 > 跨平台、多来源音乐播放器
 
+![效果图](https://images.gitee.com/uploads/images/2019/0413/185944_5b3a5fd7_3028814.png)
+
 #### Build Setup
 
 ``` bash
@@ -19,9 +21,9 @@ npm run build
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
-
+全新改版
 
 ## bugs
 
 - 点一次歌曲名，输出4次接收到播放请求
+- 定位位置有些问题

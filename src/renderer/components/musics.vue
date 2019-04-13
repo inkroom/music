@@ -10,7 +10,7 @@
     </p>
     <el-scrollbar style="height:100%;">
       <ul class="k-m-list" ref="list">
-        <li v-for="(m,i) in musics" :key="i" class="text-ellipsis">
+        <li v-for="(m,i) in musics" :key="i" class="text-ellipsis" :id="'k-musics-'+i">
           {{ i+1 }} .
           <el-tag
             closable
@@ -95,10 +95,9 @@ export default {
       }
     });
 
-    let v = { status: true, d: 3 };
-    console.log("开始测试aa");
-    console.log(v);
-    console.log(Object.assign({ status: false, a: 3 }, v, false));
+    this.$eventHub.$on("playEnd", music => {
+      this.index = -1;
+    });
   },
   methods: {
     next(music) {
@@ -143,17 +142,55 @@ export default {
         }
       }
 
-      if (this.index !== -1) {
-        let margin = getStyle(this.$refs.list.children[0], "marginTop");
+      function getMargin(obj) {
+        let margin = getStyle(obj, "marginTop");
         if (margin !== "" && margin.indexOf("px") != -1) {
-          margin = /^([0-9])/.exec(margin)[1];
+          margin = /^([0-9]+)/.exec(margin)[1];
         } else {
           margin = 0;
         }
+        let marginBottom = getStyle(obj, "marginBottom");
+        if (margin !== "" && margin.indexOf("px") != -1) {
+          margin += /^([0-9]+)/.exec(margin)[1];
+        } else {
+          margin = 0;
+        }
+        return margin;
+      }
+      if (this.index !== -1) {
+        //使用hash实现定位
+        location.hash = "k-musics-" + this.index;
+        location.hash = "";
 
-        this.$refs.list.parentNode.parentNode.scrollTop =
-          this.$refs.list.children[this.index].offsetTop -
-          margin * (this.index + 1);
+        // let margin = getStyle(this.$refs.list.children[0], "marginTop");
+        // if (margin !== "" && margin.indexOf("px") != -1) {
+        //   margin = /^([0-9]+)/.exec(margin)[1];
+        // } else {
+        //   margin = 0;
+        // }
+
+        // console.log(
+        //   `margin = ${margin} offsetTop=${
+        //     this.$refs.list.children[this.index].offsetTop
+        //   } 要设置的=${this.$refs.list.children[this.index].offsetTop -
+        //     margin * (this.index + 1)} height=${
+        //     this.$refs.list.children[0].offsetHeight
+        //   }`
+        // );
+
+        //使用高度累加
+
+        // let top = 0;
+        // for (let i = 0; i < this.index; i++) {
+        //   top += this.$refs.list.children[i].offsetHeight;
+        //   top += getMargin(this.$refs.list.children[i]);
+        // }
+
+        // console.log(`累计高度=${top} 现有top=${this.$refs.list.parentNode.parentNode.scrollTop}`);
+        // this.$refs.list.parentNode.parentNode.scrollTop =
+        //   this.$refs.list.children[this.index].offsetTop -
+        //   margin * (this.index + 1) +
+        //   15 *(this.index + 1) ;
       }
     }
   }
@@ -161,28 +198,7 @@ export default {
 </script>
 <style lang="scss">
 $name-height: 24px;
-.k-m-list {
-  padding-right: 15px;
-  padding-left: 15px;
-  // padding-bottom: 30px;
-  box-sizing: border-box;
-  ul,
-  li {
-    list-style-type: none;
-    margin: 10px 3px;
-  }
-  i {
-    cursor: pointer;
-  }
-  .icon-hand-pointing-right {
-    color: rgb(214, 203, 203);
-    font-size: 20px;
-  }
-  .name {
-    line-height: $name-height;
-    height: $name-height;
-  }
-}
+
 #k-music-list-container {
   padding-bottom: 30px;
   box-sizing: border-box;
@@ -202,6 +218,34 @@ $name-height: 24px;
     cursor: pointer;
     margin-right: 15px;
     font-size: 20px;
+  }
+}
+
+.k-m-list {
+  padding-right: 15px;
+  padding-left: 15px;
+  // padding-bottom: 30px;
+  box-sizing: border-box;
+  ul,
+  li {
+    list-style-type: none;
+    margin: 10px 3px;
+  }
+  i {
+    cursor: pointer;
+  }
+  .icon-hand-pointing-right {
+    color: rgb(218, 97, 97);
+    font-size: 20px;
+    margin-right: 3px !important;
+  }
+  .name {
+    line-height: $name-height;
+    height: $name-height;
+    cursor: pointer;
+  }
+  .name:hover {
+    text-decoration: underline;
   }
 }
 </style>

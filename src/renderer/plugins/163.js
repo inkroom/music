@@ -67,6 +67,48 @@ export default class Wang {
     equals(music1, music2) {
         return music1.id == music2.id;
     }
+    getMusics(url) {
+        let id = -1;
+        let res = new RegExp('^http://music\\.163\\.com/playlist/([0-9]+)/').exec(url);
+        if (res instanceof Array && res.length > 1) {
+            id = res[1];
+        } else {
+            res = new RegExp('^https://music\\.163\\.com/#/playlist\\?id=([0-9]+)').exec(url);
+            console.log(res);
+            if (res instanceof Array && res.length > 1) {
+                id = res[1];
+            }
+        }
+        if (id == -1) {
+            return Promise.reject(url);
+        }
+
+        const data = {
+            id: id,
+            n: 100000,
+            s: 8
+        }
+
+        return Promise.resolve(wangRequest(
+            'POST', `https://music.163.com/weapi/v3/playlist/detail`, data,
+            { crypto: 'linuxapi' }
+        ).then(res => {
+            let data = res.body.playlist.tracks;
+            let musics = [];
+
+            for (let i = 0; i < data.length; i++) {
+                let m = { name: data[i].name, id: data[i].id, time: data[i].dt / 1000 };
+                if (data[i].al) {
+                    m.cover = data[i].al.picUrl;
+                }
+                if (data[i].ar && data[i].ar.length > 0) {
+                    m.author = data[i].ar[0].name;
+                }
+                musics.push(m)
+            }
+            return musics;
+        }))
+    }
     getMusic(music) {
 
         return new Promise((resolve, reject) => {

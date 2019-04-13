@@ -4,8 +4,8 @@
       <img :src="music.cover" alt>
     </div>
     <div class="right">
-      <div>
-        <span>{{ title }}</span>
+      <div class="text-ellipsis">
+        <span :title="title">{{ title }}</span>
       </div>
       <div class="controller">
         <span>
@@ -21,7 +21,7 @@
           <i class="iconfont icon-next" @click="next"></i>
         </span>
         <span>
-          <i class="iconfont icon-random"></i>
+          <i class="iconfont icon-random" @click="nextable=!nextable"></i>
         </span>
         <span style="position:relative">
           <!-- <el-slider
@@ -49,7 +49,7 @@
       @playing="playingEvent"
       @pause="playing = false"
       @timeupdate="timeupdate"
-      @ended="playing = false"
+      @ended="playEnd"
     ></audio>
   </div>
 </template>
@@ -62,6 +62,7 @@ export default {
       volume: 50, //音量
       playing: false,
       drag: false,
+      nextable: true, //是否继续播放
       music: {
         name: "歌曲名",
         cover:
@@ -136,6 +137,16 @@ export default {
       //   this.$store.dispatch("updateMusic", music);
       // }
     },
+    playEnd() {
+      this.playing = false;
+
+      //广播播放结束事件
+      this.$eventHub.$emit("playEnd", this.music);
+
+      if (this.nextable) {
+        this.next();
+      }
+    },
     clearDrag() {
       this.drag = false;
       // document.removeEventListener("mouseup", this.clearDrag);
@@ -166,8 +177,6 @@ export default {
         this.$message.error(`${this.music.name}无法播放，可能是版权受限`);
         //广播无法播放事件
         this.$eventHub.$emit("playerError", this.music);
-        
-
       }
     },
     seek(process) {
