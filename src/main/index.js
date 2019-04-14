@@ -80,6 +80,22 @@ app.on('activate', () => {
   }
 })
 
+const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+  // Someone tried to run a second instance, we should focus our window.
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.focus()
+  }
+})
+
+if (isSecondInstance) {
+  console.log('第二个实例退出')
+  app.quit()
+}
+
+// console.log(app.requestSingleInstanceLock())
+// const single = app.requ
+
 /**
  * Auto Updater
  *

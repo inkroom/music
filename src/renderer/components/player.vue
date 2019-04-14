@@ -170,7 +170,7 @@ export default {
       if (this.music.url !== "") {
         this.$message.error(`${this.music.name}无法播放，可能是版权受限`);
         //广播无法播放事件
-        this.$eventHub.$emit("playerError", this.music);
+        this.$eventHub.$emit("playError", this.music);
 
         if (this.nextable) {
           this.next();

@@ -95,11 +95,16 @@ export default {
     this.$eventHub.$on("next", this.next);
     this.$eventHub.$on("prev", music => {});
     this.$eventHub.$on("playError", music => {
+      console.log(`${music.name} play error`);
       //查找index
-      let index = this.musics.findIndex(d => d.id === music.id);
+      let index = this.musics.findIndex(d => d.kid === music.kid);
+      console.log('error index ='+index);
       if (index != -1) {
         music.status = false;
-        this.$store.dispatch("updateMusic", { index, music });
+        this.$store.dispatch("updateMusic", {
+          index: this.musicsSize - 1 - index,
+          music
+        });
       }
     });
 
