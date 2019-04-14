@@ -23,6 +23,14 @@ npm run build
 
 全新改版
 
+## 说明
+
+- 快捷键 Alt+Shift+S
+
 ## bugs
 
 - 点一次歌曲名，输出4次接收到播放请求
+
+# license
+
+Apache License 2.0

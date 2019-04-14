@@ -144,7 +144,10 @@ export default {
     statusClear(index) {
       let music = Object.assign({}, this.musics[index]);
       music.status = true;
-      this.$store.dispatch("updateMusic", { index, music });
+      this.$store.dispatch("updateMusic", {
+        index: this.musicsSize - 1 - index,
+        music
+      });
     },
     location() {
       function getStyle(obj, attr) {
@@ -211,6 +214,9 @@ export default {
 </script>
 <style lang="scss">
 $name-height: 24px;
+$li-margin-vertical: 10px;
+
+$bar-padding-height: $name-height + $li-margin-vertical * 2;
 
 #k-music-list-container {
   padding-bottom: 30px;
@@ -227,6 +233,10 @@ $name-height: 24px;
   .el-scrollbar__wrap {
     overflow-x: hidden !important;
   }
+  .el-scrollbar .is-vertical {
+    // box-sizing: border-box;
+    // padding-bottom: $bar-padding-height;
+  }
   .iconfont {
     cursor: pointer;
     margin-right: 15px;
@@ -237,12 +247,14 @@ $name-height: 24px;
 .k-m-list {
   padding-right: 15px;
   padding-left: 15px;
-  // padding-bottom: 30px;
+  margin-bottom: $bar-padding-height;
   box-sizing: border-box;
   ul,
   li {
     list-style-type: none;
-    margin: 10px 3px;
+    margin: $li-margin-vertical 3px;
+
+    user-select: text;
   }
   i {
     cursor: pointer;
@@ -256,6 +268,7 @@ $name-height: 24px;
     line-height: $name-height;
     height: $name-height;
     cursor: pointer;
+    user-select: text;
   }
   .name:hover {
     text-decoration: underline;

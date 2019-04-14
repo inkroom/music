@@ -16,21 +16,24 @@ export default {
                     .then(music => {
                         if (music.url && music.url !== "") {
                             this.index = index;
-                            if (typeof (index) === 'number')
-                                this.$store.dispatch("updateMusic", { index, music });
+                            if (index != -1) {
+                                this.$store.dispatch("updateMusic", { index: this.musicsSize - 1 - index, music });
+
+                            }
                             console.log(`this.index = ${this.index} index=${index}`)
                             console.log(music)
                             console.log(this.musics[index])
                             this.$eventHub.$emit("musicChange", music);
                         } else {
-                            if (typeof (index) === 'number') {
+                            if (index != -1) {
                                 let m = Object.assign(Object.assign({}, this.musics[index]), music);
                                 m.status = false;
-                                this.$store.dispatch("updateMusic", { index, music: m });
+                                this.$store.dispatch("updateMusic", { index: this.musicsSize - 1 - index, music: m });
                             }
                             this.$message(`${music.name} 不能播放`);
                         }
                     }).catch(err => {
+                        console.log(err);
                         this.$message.error('获取数据失败');
                     });
             }

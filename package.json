@@ -1,9 +1,9 @@
 {
   "name": "music",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "inkroom <m18942819324@163.com>",
   "description": "跨平台、多来源音乐播放器",
-  "license": null,
+  "license": "ASL",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",

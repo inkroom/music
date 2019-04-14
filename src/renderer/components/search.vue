@@ -36,7 +36,7 @@
               </span>
               <span
                 class="name"
-                @click="play(i)"
+                @click="play(m)"
                 :title="m.name +' - '+m.author"
               >{{ m.name }} - {{m.author}}</span>
             </li>
@@ -102,6 +102,10 @@ export default {
             this.page = res.page;
             this.total = res.total;
             this.musics = res.musics;
+          }).catch(err=>{
+              if(err==null){
+                  this.$message.error('找不到指定歌曲')
+              }
           });
       }
     },

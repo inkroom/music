@@ -127,35 +127,31 @@ export default class Wang {
                 console.log(data);
                 data = data.body;
                 if (data.code == 200) {
-                    try {
-                        music.url = data.data[0].url;
-                        console.log(music);
-                        if (music.album) {
-                            //获取封面
-                            wangRequest(
-                                'POST', `https://music.163.com/weapi/v1/album/${music.album}`, {}, {
-                                    crypto: 'weapi'
-                                }
-                            ).then((data) => {
-                                console.log(data);
-                                if (data.body.code == 200)
-                                    music.cover = data.body.album.picUrl;
-                                resolve(music)
-                            }).catch((error) => {
-                                reject(error)
-                            })
-                        } else {
+                    music.url = data.data[0].url;
+                    console.log(music);
+                    if (music.album) {
+                        //获取封面
+                        wangRequest(
+                            'POST', `https://music.163.com/weapi/v1/album/${music.album}`, {}, {
+                                crypto: 'weapi'
+                            }
+                        ).then((data) => {
+                            console.log(data);
+                            if (data.body.code == 200)
+                                music.cover = data.body.album.picUrl;
                             resolve(music)
-                        }
-                    } catch (e) {
-                        console.log(e);
+                        }).catch((error) => {
+                            console.log('获取封面失败')
+                            reject(error)
+                        })
+                    } else {
                         resolve(music)
                     }
 
                 } else {
-                    reject()
+                    reject('不止两百')
                 }
-            }).catch(function (error) {
+            }).catch( (error) =>{
                 console.log(error);
                 reject(error)
             })

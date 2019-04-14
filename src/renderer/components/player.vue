@@ -5,7 +5,10 @@
     </div>
     <div class="right">
       <div class="text-ellipsis">
-        <span :title="title">{{ title }}</span>
+        <marquee v-if="music.url!=''">
+          <span :title="title">{{ title }}</span>
+        </marquee>
+        <span :title="title" v-else>{{ title }}</span>
       </div>
       <div class="controller">
         <span>
@@ -35,7 +38,13 @@
       </div>
       <div class="process-bar">
         <div class="bar">
-          <el-slider v-model="process" :show-tooltip="false" ref="slider" @change="seek"></el-slider>
+          <el-slider
+            v-model="process"
+            :show-tooltip="false"
+            ref="slider"
+            @change="seek"
+            :disabled="music.url==''"
+          ></el-slider>
         </div>
         <span class="time">{{ music.current | humanTime }}/{{ music.time | humanTime }}</span>
       </div>
@@ -50,6 +59,8 @@
       @pause="playing = false"
       @timeupdate="timeupdate"
       @ended="playEnd"
+      @emptied="playerEmptied"
+      @progress="playerProgress"
     ></audio>
   </div>
 </template>
@@ -84,35 +95,12 @@ export default {
       return this.$refs.audio;
     }
   },
-  filters: {
-    // timeFormat(value){
-    // }
-  },
   created() {
     //注册播放音乐改变事件，该事件可能来自于列表项点击，自动切换，搜索列表
     this.$eventHub.$on("musicChange", music => {
       this.music = Object.assign({ currentTime: 0 }, music);
       console.log("接收到播放请求");
     });
-  },
-  mounted() {
-    //注册拖拽
-    // this.$refs.slider.$refs.button1.$refs.button.addEventListener(
-    //   "mousedown",
-    //   () => {
-    //     this.drag = true;
-    //   }
-    // );
-    // this.$refs.slider.$refs.button1.$refs.button.addEventListener(
-    //   "mouseup",
-    //   () => {
-    //     this.drag = false;
-    //   }
-    // );
-    // document.addEventListener("mouseup", this.clearDrag);
-  },
-  destroyed() {
-    // document.addEventListener("mouseup", this.clearDrag());
   },
   watch: {
     volume(nv) {
@@ -124,6 +112,12 @@ export default {
     next() {
       //下一曲，传递当前音乐，避免重复播放
       this.$eventHub.$emit("next", this.music);
+    },
+    playerEmptied() {
+      // this.$message.error('播放中断');
+    },
+    playerProgress() {
+      //正在缓冲
     },
     playingEvent() {
       this.music.time = this.audio.duration;
@@ -177,6 +171,10 @@ export default {
         this.$message.error(`${this.music.name}无法播放，可能是版权受限`);
         //广播无法播放事件
         this.$eventHub.$emit("playerError", this.music);
+
+        if (this.nextable) {
+          this.next();
+        }
       }
     },
     seek(process) {
