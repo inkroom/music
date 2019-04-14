@@ -1,6 +1,7 @@
 # music
 
 > 跨平台、多来源音乐播放器
+> 支持酷狗、网易云平台
 
 ![效果图](https://images.gitee.com/uploads/images/2019/0413/185944_5b3a5fd7_3028814.png)
 
@@ -30,6 +31,7 @@ npm run build
 ## bugs
 
 - 点一次歌曲名，输出4次接收到播放请求
+- 滚动条位高度不对
 
 # license
 

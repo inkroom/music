@@ -8,8 +8,8 @@ const state = {
 
 const mutations = {
   removeMusic(state, index) {
-    state.list.splice(index, 1);
     db.get('musics').remove({ kid: state.list[index].kid }).write();
+    state.list.splice(index, 1);
   },
   addMusic(state, music) {
     if (!music.kid) music.kid = Math.random();
