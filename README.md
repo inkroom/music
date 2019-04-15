@@ -3,7 +3,8 @@
 > 跨平台、多来源音乐播放器
 > 支持酷狗、网易云平台
 
-![效果图](https://images.gitee.com/uploads/images/2019/0413/185944_5b3a5fd7_3028814.png)
+![效果图](https://user-images.githubusercontent.com/27911304/56107309-2308bc00-5f78-11e9-9669-018b37565bc8.png)
+
 
 #### Build Setup
 
