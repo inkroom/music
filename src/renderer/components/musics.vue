@@ -126,7 +126,9 @@ export default {
         console.log(`next = ${next}`);
 
         if (!this.$helper.equals(music, this.musics[next])) {
-          this.play(next);
+          this.play(next).then(m=>{}).catch(m=>{
+            this.next(m);
+          });
           // this.$eventHub.$emit('musicChange',next);
         } else {
           console.log(`递归 next = ${next}`);
