@@ -101,7 +101,7 @@ export default class Ku {
 
                 let token = getQueryString(res.request.responseURL, 'token');
                 if (token == null) {
-                    callback(null);
+                    reject(null)
                     return;
                 }
                 console.log(res);
@@ -121,7 +121,7 @@ export default class Ku {
                         for (var i = 0; i < lines.length; i++) {
 
                             if (lines[i].includes('var dataFromSmarty')) {
-                                console.log('lines = ' + lines[i]);
+                                // console.log('lines = ' + lines[i]);
                                 //获取json
                                 var json = new RegExp(' (\\[.+),//').exec(lines[i])
                                 if (json.length == 2) {
@@ -151,6 +151,8 @@ export default class Ku {
                 }).catch(err => {
                     reject(err);
                 })
+            }).catch(err=>{
+                reject(err);
             })
         })
     }

@@ -2,7 +2,7 @@
 import db from '@/../db';
 
 const state = {
-  list: db.get('musics').value()
+  list:  db.get('musics').value().slice()//必须如此，否则会出现lowdb
   //  [{ name: "测试歌曲名", originName: "酷狗", time: "00:00", status: false, id: 1 }]
 }
 
@@ -17,11 +17,15 @@ const mutations = {
     db.get('musics').push(music).write();
   },
   addMusics(state, musics) {
+    console.log('vuex addMusics')
+    console.log(musics.length);
+    console.log(state.list.length);
     musics.forEach(element => {
       if (!element.kid) {
         element.kid = Math.random();
       }
       state.list.push(element);
+      console.log(state.list.length);
       db.get('musics').push(element).write();
     });
   },

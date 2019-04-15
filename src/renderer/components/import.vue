@@ -43,6 +43,7 @@ export default {
         this.$helper
           .getMusics(this.origin, this.url, this.$store.state.List.list)
           .then(musics => {
+
             this.$store.dispatch("addMusics", musics).then(res => {
               this.$message.success(`导入${musics.length}首歌曲`);
             });
@@ -51,6 +52,8 @@ export default {
             console.log(err);
             console.log("音乐导入失败");
           });
+      } else {
+        this.$message('不是合法的url')
       }
     }
   }

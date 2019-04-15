@@ -78,16 +78,22 @@ let helpers = {
 
 
         let m = modules[origin];
-        let res = m.getMusics(url).then(ms => {
+        return Promise.resolve(m.getMusics(url).then(ms => {
+            console.log('导入')
+            console.log(ms);
             for (let i = ms.length - 1; i >= 0; i--) {
+                ms[i].kid = Math.random();
+                ms[i].status = true;
+                ms[i].origin = origin;
+                ms[i].originName = m.originName
+                
                 for (let j = 0; j < musics.length; j++) {
                     if (m.equals(ms[i], musics[j])) {//重复需要去掉
                         ms.splice(i, 1);
+                        break;
                     }
-                    ms[i].status = true;
-                    ms[i].origin = origin;
-                    ms[i].originName = m.originName
                 }
+                
             }
             // ms.forEach(e => {
             //     e.status = true;
@@ -95,8 +101,7 @@ let helpers = {
             //     e.originName = m.originName
             // })
             return ms;
-        });
-        return Promise.resolve(res);
+        }));
     }
 
 }
