@@ -43,6 +43,7 @@ $title-bar-height: 35px;
   padding-left: 15px;
   border-bottom: 1px solid rgb(121, 121, 133);
   -webkit-app-region: drag;
+  z-index: 99999;
   .controller-bar-group {
     float: right;
 

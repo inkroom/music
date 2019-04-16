@@ -22,16 +22,15 @@ files.keys().forEach(key => {
 let helpers = {
     contains(music, musics) {
         let m = modules[music.origin];
-        let i = 0;
-        for (i = 0; i < musics.length; i++) {
+        for (let i = 0; i < musics.length; i++) {
             if (musics[i].origin != music.origin) {
                 continue;
             }
             if (m.equals(music, musics[i])) {
-                break;
+                return true;
             }
         }
-        return i === musics.length;
+        return false;
     },
     equals(target, source) {//此处判断很有问题
         if (target.origin != source.origin) {//不是一个库的直接不等

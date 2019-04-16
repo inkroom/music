@@ -1,7 +1,7 @@
 <template >
   <div id="player">
     <div class="cover left">
-      <img :src="music.cover" alt>
+      <img :src="music.cover" alt @click="dev">
     </div>
     <div class="right">
       <div class="text-ellipsis">
@@ -186,6 +186,9 @@ export default {
         console.log(this.audio.currentTime);
         this.audio.play(); //暂停的情况下必须调用才能继续播放，播放中调用该方法无影响
       }
+    },
+    dev(){
+      this.$electron.remote.getCurrentWindow().webContents.openDevTools();
     }
   }
 };

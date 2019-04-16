@@ -19,7 +19,6 @@ export default {
                             this.index = index;
                             if (index != -1) {
                                 this.$store.dispatch("updateMusic", { index: this.musicsSize - 1 - index, music });
-
                             }
                             console.log(`this.index = ${this.index} index=${index}`)
                             console.log(music)
@@ -35,7 +34,7 @@ export default {
                             this.$message(`${music.name} 不能播放`);
                             return Promise.reject(music);
                         }
-                    }).catch(err => {
+                    }).catch(err => {   
                         console.log(err);
                         this.$message.error('获取数据失败');
                         return Promise.reject(err);
