@@ -43,7 +43,10 @@ $title-bar-height: 35px;
   padding-left: 15px;
   border-bottom: 1px solid rgb(121, 121, 133);
   -webkit-app-region: drag;
-  z-index: 99999;
+  z-index: 2099;
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
   .controller-bar-group {
     float: right;
 
@@ -63,7 +66,12 @@ $title-bar-height: 35px;
 #app {
   height: 100%;
 }
+
+.el-message ,.el-notification,.el-dialog.is-fullscreen{
+  top: $title-bar-height + 20px !important;
+}
 .content-main {
+  padding-top: $title-bar-height;
   height: 100%;
 }
 </style>

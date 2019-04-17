@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="visible" width="100%" append-to-body>
+  <el-dialog :visible.sync="visible" width="100%" append-to-body >
     <el-container>
       <el-header>
         <div style="text-align:center">
